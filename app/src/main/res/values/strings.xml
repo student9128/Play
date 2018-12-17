@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Play</string>
+    <string name="home">Home</string>
+    <string name="nav">Nav</string>
+    <string name="project">Project</string>
+    <string name="person">Person</string>
+</resources>
