@@ -20,6 +20,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:shimmer_duration="3000"
+            app:shimmer_direction="left_to_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

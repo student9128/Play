@@ -10,6 +10,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:shimmer_duration="3000"
+            app:shimmer_direction="bottom_to_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <TextView

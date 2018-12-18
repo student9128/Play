@@ -10,7 +10,7 @@ import android.widget.Scroller
  * Describe:<br/>
  */
 class ScrollerDuration(var context: Context, var interpolator: Interpolator) : Scroller(context, interpolator) {
-    private var mDuration = 600
+    private var mDuration = 3000
     override fun startScroll(startX: Int, startY: Int, dx: Int, dy: Int) {
         super.startScroll(startX, startY, dx, dy, mDuration)
     }
@@ -20,7 +20,7 @@ class ScrollerDuration(var context: Context, var interpolator: Interpolator) : S
     }
 
     open fun setDuration(duration: Int) {
-        if (duration >= 300) {
+        if (duration >= 500) {
             mDuration = duration
         }
     }

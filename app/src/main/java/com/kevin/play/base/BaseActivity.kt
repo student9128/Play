@@ -1,6 +1,8 @@
 package com.kevin.play.base
 
 import android.os.Bundle
+import android.view.MenuItem
+import com.kevin.play.R
 import kotlinx.android.synthetic.main.layout_tool_bar.*
 
 /**
@@ -21,11 +23,16 @@ abstract class BaseActivity : AppBaseActivity() {
         initListener()
     }
 
-    abstract fun initListener()
-
-    open abstract fun initView()
 
     open abstract fun setLayoutResId(): Int
+    open abstract fun initView()
+    abstract fun initListener()
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.home -> onBackPressed()
+        }
+        return true
+    }
 
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressView">
+    <attr name="progressColor" format="color|reference" />
+    <attr name="progressBackgroundColor" format="color|reference" />
+    <attr name="progress" format="integer" />
+    <attr name="progressTextSize" format="dimension" />
+    <attr name="clockWise" format="boolean" />
+    <attr name="progressWidth" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="ProgressBarView">
+        <attr name="progressBarColor" format="color|reference" />
+        <attr name="progressBarBackgroundColor" format="color|reference" />
+        <attr name="progressBarTotalProgress" format="integer" />
+        <attr name="progressBarTextSize" format="dimension" />
+        <attr name="progressBarProgress" format="integer" />
+        <attr name="position">
+            <enum name="right" value="0" />
+            <enum name="inter" value="1" />
+            <enum name="top" value="2" />
+            <enum name="none" value="3"/>
+        </attr>
+    </declare-styleable>
+</resources>

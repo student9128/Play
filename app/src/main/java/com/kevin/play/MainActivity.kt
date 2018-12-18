@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.kevin.play.adapter.TabFragmentAdapter
 import com.kevin.play.base.BaseActivity
 import com.kevin.play.ui.fragment.HomeFragment
+import com.kevin.play.ui.fragment.NavFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
@@ -53,7 +54,7 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
         fragmentList?.clear()
         fragmentList?.let {
             it.add(HomeFragment.newInstance("Home"))
-            it.add(HomeFragment.newInstance("Nav"))
+            it.add(NavFragment.newInstance("Nav"))
             it.add(HomeFragment.newInstance("Project"))
             it.add(HomeFragment.newInstance("Person"))
         }

@@ -16,15 +16,14 @@ import android.view.ViewGroup
  */
 class InfiniteViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, attrs) {
     var mAdapter: VPagerAdapter? = null
-    private var l = MyOnPageChangeListener()
-    private var v = VOPageChageListener()
+    private var v = VOPageChangeListener()
+    var l = MyOnPageChangeListener()
 
     override fun setAdapter(adapter: PagerAdapter?) {
         mAdapter = VPagerAdapter(adapter)
-        removeOnPageChangeListener(l)
-        addOnPageChangeListener(l)
         super.setAdapter(adapter)
-        currentItem = 1
+        removeOnPageChangeListener(v)
+        addOnPageChangeListener(v)
     }
 
     override fun addOnPageChangeListener(listener: OnPageChangeListener) {
@@ -35,13 +34,10 @@ class InfiniteViewPager(context: Context, attrs: AttributeSet) : ViewPager(conte
         super.removeOnPageChangeListener(v)
     }
 
-    inner class VOPageChageListener : OnPageChangeListener {
+    inner class VOPageChangeListener : OnPageChangeListener {
+        private var position: Int = -1
         private val listener: OnPageChangeListener? = null
-        private var position: Int = 0
         override fun onPageScrollStateChanged(state: Int) {
-            listener?.onPageScrollStateChanged(state)
-            Log.w("InfiniteViewPager","position=$position")
-            Log.d("InfiniteViewPager","adapterCount="+mAdapter!!.count)
             if (position == SCROLL_STATE_IDLE) {
                 if (position == mAdapter!!.count - 1) {
                     setCurrentItem(1, false)
@@ -49,6 +45,7 @@ class InfiniteViewPager(context: Context, attrs: AttributeSet) : ViewPager(conte
                     setCurrentItem(mAdapter!!.count - 2, false)
                 }
             }
+            listener?.onPageScrollStateChanged(state)
         }
 
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -57,13 +54,13 @@ class InfiniteViewPager(context: Context, attrs: AttributeSet) : ViewPager(conte
 
         override fun onPageSelected(position: Int) {
             this.position = position
+            Log.w("InfiniteViewPager", "position=$position")
             listener?.onPageSelected(position)
         }
 
     }
 
     inner class VPagerAdapter(private var adapter: PagerAdapter?) : PagerAdapter() {
-        var p: Int = 0
 
         init {
             adapter!!.registerDataSetObserver(object : DataSetObserver() {
@@ -82,11 +79,11 @@ class InfiniteViewPager(context: Context, attrs: AttributeSet) : ViewPager(conte
         }
 
         override fun getCount(): Int {
-            return adapter!!.count + 2
+            return adapter!!.count
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            p = position
+           var p = position
             when (position) {
                 0 -> p = adapter!!.count - 1
                 adapter!!.count + 1 -> p = 0
@@ -101,7 +98,7 @@ class InfiniteViewPager(context: Context, attrs: AttributeSet) : ViewPager(conte
 
     }
 
-    internal inner class MyOnPageChangeListener : ViewPager.OnPageChangeListener {
+    inner class MyOnPageChangeListener : ViewPager.OnPageChangeListener {
         var oldPosition = 0
 
         override fun onPageSelected(position: Int) {

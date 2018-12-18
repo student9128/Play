@@ -57,6 +57,9 @@ class BannerAdapter(context: Context, data: MutableList<HomeBannerData>) : Pager
                 .apply(RequestOptions().centerCrop())
                 .into(ivBanner)
         }
+        ivBanner.setOnClickListener {
+            listener!!.onViewPagerClick(position)
+        }
         container.addView(view)
         return view
     }
@@ -66,8 +69,18 @@ class BannerAdapter(context: Context, data: MutableList<HomeBannerData>) : Pager
 
     }
 
-//    override fun getItemPosition(`object`: Any): Int {
-//        return POSITION_NONE
+    interface OnViewPagerClickListener {
+        fun onViewPagerClick(position: Int)
+
+    }
+
+    private var listener: OnViewPagerClickListener? = null
+    open fun setOnViewPagerClickListener(l: OnViewPagerClickListener) {
+        listener = l
+    }
+
+//    override fun getPageWidth(position: Int): Float {
+//        return 0.8F
 //    }
 
 
