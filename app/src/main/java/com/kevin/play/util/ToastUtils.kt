@@ -17,10 +17,11 @@ object ToastUtils {
     }
 
     fun showToast(context: Context, msg: String, duration: Int) {
-        if (null == toast) {
+        if (toast == null) {
             toast = Toast.makeText(context, msg, duration)
         }
         toast!!.setText(msg)
+        toast!!.duration = duration
         toast!!.show()
     }
 

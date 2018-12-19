@@ -3,10 +3,7 @@ package com.kevin.play.ui.activity
 import android.content.Context
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.kevin.play.R
 import com.kevin.play.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_web.*
@@ -29,7 +26,8 @@ class WebActivity : BaseActivity(), View.OnKeyListener {
         webSettings.domStorageEnabled = true
         webSettings.useWideViewPort = true
         webSettings.setSupportZoom(true)
-        webSettings.builtInZoomControls = true
+//        webSettings.builtInZoomControls = true
+        webSettings.layoutAlgorithm=WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         webView.webViewClient = webViewClient
         webView.webChromeClient = webChromeClient

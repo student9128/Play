@@ -27,7 +27,8 @@ open class AppBaseFragment :Fragment() {
      * @param msg the message
      */
     open fun toast(msg: String) {
-        ToastUtils.showToast(mActivity!!.applicationContext, msg, Toast.LENGTH_SHORT)
+        ToastUtils.showToast(context!!.applicationContext, msg, Toast.LENGTH_SHORT)
+
     }
 
     /**
@@ -35,7 +36,7 @@ open class AppBaseFragment :Fragment() {
      * @param resId the message's res id
      */
     open fun toast(resId: Int) {
-        ToastUtils.showToast(mActivity!!.applicationContext, resId, Toast.LENGTH_SHORT)
+        ToastUtils.showToast(context!!.applicationContext, resId, Toast.LENGTH_SHORT)
     }
 
     /**

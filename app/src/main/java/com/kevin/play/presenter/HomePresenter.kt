@@ -3,9 +3,12 @@ package com.kevin.play.presenter
 import android.util.Log
 import com.google.gson.Gson
 import com.kevin.play.base.BaseObserve
+import com.kevin.play.bean.HomeArticleListBean
 import com.kevin.play.bean.HomeBannerBean
 import com.kevin.play.contract.HomeContract
 import com.kevin.play.data.RequestDataSource
+import com.kevin.play.http.HttpCallback
+import com.kevin.play.util.LogUtils
 import io.reactivex.Observer
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,6 +21,7 @@ import io.reactivex.schedulers.Schedulers
  * Describe:<br/>
  */
 open class HomePresenter(view: HomeContract.View, private var requestDataSource: RequestDataSource) : HomeContract.Presenter {
+
     companion object {
         const val TAG = "HomePresenter"
     }
@@ -47,5 +51,24 @@ open class HomePresenter(view: HomeContract.View, private var requestDataSource:
 
             })
 
+    }
+
+    override fun requestArticleList(page: Int, type: String) {
+        val observable = requestDataSource.requestHomeArticleList(page)
+        var x = object : HttpCallback() {
+
+            override fun onSuccess(response: Map<String, Any>) {
+                val r = Gson().toJson(response)
+                LogUtils.d(TAG, "response==$r")
+                val articleListBean = Gson().fromJson(r, HomeArticleListBean::class.java)
+                val content = articleListBean.data.content
+                view.showArticleList(content, type)
+            }
+
+            override fun onFailure(e: Throwable) {
+            }
+
+        }
+        x.request(observable)
     }
 }

@@ -6,5 +6,8 @@ package com.kevin.play.constant
  * Describe:<br/>
  */
 object Constants {
-    const val BANNER_INTERVAL_TIME:Long = 10000
+    const val BANNER_INTERVAL_TIME: Long = 10000
+
+    const val REQUEST_LOAD_MORE = "loadMore"
+    const val REQUEST_REFRESH = "refresh"
 }

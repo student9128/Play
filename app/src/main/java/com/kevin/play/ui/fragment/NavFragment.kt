@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.kevin.play.R
 import com.kevin.play.adapter.BannerAdapter
 import com.kevin.play.base.BaseFragment
+import com.kevin.play.bean.Content
 import com.kevin.play.bean.HomeBannerData
 import com.kevin.play.contract.HomeContract
 import com.kevin.play.data.RequestDataSource
@@ -24,6 +25,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * Describe:<br/>
  */
 class NavFragment : BaseFragment(), HomeContract.View {
+    override fun showArticleList(data: List<Content>, type: String) {
+    }
 
     var homeBanner: ViewPager? = null
     private var currentPosition = 1

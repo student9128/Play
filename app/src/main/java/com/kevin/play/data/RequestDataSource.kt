@@ -9,10 +9,11 @@ import io.reactivex.Observable
  * Describe:<br/>
  */
 class RequestDataSource : RemoteDataSource {
+
     private val httpService = AppRetrofit.appRetrofit.getHttpService()
 
     companion object {
-        var requestDataSource: RequestDataSource? = null
+        private var requestDataSource: RequestDataSource? = null
             get() {
                 if (field == null) {
                     field = RequestDataSource()
@@ -29,4 +30,9 @@ class RequestDataSource : RemoteDataSource {
     override fun requestDataBanner(): Observable<Map<String, Any>> {
         return httpService.getBanner()
     }
+
+    override fun requestHomeArticleList(page: Int): Observable<Map<String, Any>> {
+        return httpService.getArticleList(page)
+    }
+
 }

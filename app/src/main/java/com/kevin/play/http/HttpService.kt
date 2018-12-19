@@ -18,8 +18,8 @@ interface HttpService {
     @GET("wxarticle/list/{id}/{page}/json")
     fun getWxArticleHistory(@Path("id") id: String, @Path("page") page: String): Observable<Map<String, Any>>
 
-    @GET("list/{page}/json")
-    fun getArticleList(@Path("page") page: String): Observable<Map<String, Any>>
+    @GET("article/list/{page}/json")
+    fun getArticleList(@Path("page") page: Int): Observable<Map<String, Any>>
 
     @GET("banner/json")
     fun getBanner():Observable<Map<String,Any>>

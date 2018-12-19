@@ -4,32 +4,35 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.view.ViewPager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
 import com.kevin.play.R
 import com.kevin.play.adapter.BannerAdapter
+import com.kevin.play.adapter.HomeArticleAdapter
 import com.kevin.play.base.BaseFragment
+import com.kevin.play.bean.Content
 import com.kevin.play.bean.HomeBannerData
 import com.kevin.play.constant.Constants
 import com.kevin.play.contract.HomeContract
 import com.kevin.play.data.RequestDataSource
 import com.kevin.play.presenter.HomePresenter
 import com.kevin.play.ui.activity.WebActivity
-import com.kevin.play.util.DisplayUtils
 import com.kevin.play.util.ViewPagerUtils
+import com.kevin.play.view.DividerItemDecoration
 import com.kevin.play.view.transformer.*
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by Kevin on 2018/12/5<br/>
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeListener, View.OnTouchListener, BannerAdapter.OnViewPagerClickListener {
+class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeListener, View.OnTouchListener, BannerAdapter.OnViewPagerClickListener, HomeArticleAdapter.OnLoadMoreListener, HomeArticleAdapter.OnChildItemClickListener {
 
     var homeBanner: ViewPager? = null
+    var recyclerView: RecyclerView? = null
     private var currentPosition = 1
     private var d: MutableList<HomeBannerData> = ArrayList()
 
@@ -37,7 +40,9 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     private var data = ArrayList<HomeBannerData>()
     private var mPresenter: HomeContract.Presenter? = null
     private var isPlay = false
-
+    private var homeAdapter: HomeArticleAdapter? = null
+    private var articleData = ArrayList<Content>()
+    private var pageNum = 0
     override fun addDisposable(d: Disposable) {
         cDisposable.add(d)
     }
@@ -52,7 +57,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     }
 
     companion object {
-        open fun newInstance(args: String): HomeFragment {
+        fun newInstance(args: String): HomeFragment {
             var fragment = HomeFragment()
             var bundle = Bundle()
             bundle.putString("args", args)
@@ -67,45 +72,53 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
 
     override fun initView() {
         mPresenter = HomePresenter(this, RequestDataSource.getSingleInstance()!!)
-        var bundle = arguments
-        val string = bundle!!.getString("args")
-        var tvText = mView!!.findViewById<TextView>(R.id.tvText)
-        tvText.text = string
-
         homeBanner = mView!!.findViewById<ViewPager>(R.id.homeBanner)
         adapter = BannerAdapter(activity!!.applicationContext, data)
         homeBanner?.let {
             it.adapter = adapter
             it.setPageTransformer(true, PagerTransformerZoomOut())
-//            it.setPageTransformer(true, PagerTransformerSmooth())
-//            it.setPageTransformer(true, PagerTransformer3D())
             ViewPagerUtils.setDuration(it.context, it)
             it.addOnPageChangeListener(this)
             it.setOnTouchListener(this)
         }
-
-//        homeBanner.setPageTransformer(true, PagerTransformer3D())
-//        homeBanner.setPageTransformer(true, PagerTransformerAlpha())
-//        homeBanner.setPageTransformer(true, PagerTransformerCover())
-//        homeBanner.setPageTransformer(true, PagerTransformer3DInner())
+        homeAdapter = HomeArticleAdapter(context!!, articleData)
+        var l = LinearLayoutManager(mActivity)
+        var divider = DividerItemDecoration(context!!, DividerItemDecoration.VERTICAL_LIST)
+        divider.setDivider(R.drawable.bg_recycler_divider)
+        recyclerView = mView!!.findViewById(R.id.recyclerView)
+        recyclerView?.let {
+            it.addItemDecoration(divider)
+            it.layoutManager = l
+            it.adapter = homeAdapter
+        }
 
     }
 
 
     override fun initListener() {
         adapter!!.setOnViewPagerClickListener(this)
+        homeAdapter!!.setOnLoadMoreListener(this)
+        homeAdapter!!.setOnChildItemClickListener(this)
     }
 
     override fun loadData() {
         mPresenter!!.requestDataBanner()
+        mPresenter!!.requestArticleList(0, Constants.REQUEST_REFRESH)
     }
 
     override fun showDataBanner(data: List<HomeBannerData>) {
         adapter!!.addData(data)
         verifyState(data)
         homeBanner!!.setCurrentItem(1, false)
-        if (!isPlay){
+        if (!isPlay) {
             startAutoPlay()
+        }
+    }
+
+    override fun showArticleList(data: List<Content>, type: String) {
+        when (type) {
+            Constants.REQUEST_REFRESH -> homeAdapter!!.updateData(data)
+            Constants.REQUEST_LOAD_MORE -> homeAdapter!!.addData(data)
         }
     }
 
@@ -116,7 +129,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
             currentItem = homeBanner!!.currentItem
             currentItem++
             homeBanner!!.currentItem = currentItem
-            handler.postDelayed(this,Constants.BANNER_INTERVAL_TIME)
+            handler.postDelayed(this, Constants.BANNER_INTERVAL_TIME)
         }
 
     }
@@ -174,16 +187,30 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
 
     override fun onPause() {
         super.onPause()
-        if (isPlay){
-        stopAutoPlay()
+        if (isPlay) {
+            stopAutoPlay()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (!isPlay){
-        startAutoPlay()
+        if (!isPlay) {
+            startAutoPlay()
         }
+    }
+
+
+    override fun onChildItemClick(viewId: Int, position: Int) {
+        when (viewId) {
+            R.id.iv_favorite -> {
+                toast(articleData[position].title)
+                printW("position------$position")
+            }
+        }
+    }
+
+    override fun onLoadMore() {
+        mPresenter!!.requestArticleList(pageNum++, Constants.REQUEST_LOAD_MORE)
     }
 
 }

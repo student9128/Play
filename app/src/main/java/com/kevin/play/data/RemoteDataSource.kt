@@ -12,4 +12,8 @@ open interface RemoteDataSource {
      * request banner
      */
     fun requestDataBanner():Observable<Map<String,Any>>
+
+    fun requestHomeArticleList(page:Int):Observable<Map<String,Any>>
+
+
 }

@@ -30,7 +30,7 @@ abstract class BaseActivity : AppBaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
-            R.id.home -> onBackPressed()
+            android.R.id.home -> onBackPressed()
         }
         return true
     }
