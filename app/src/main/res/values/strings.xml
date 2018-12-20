@@ -4,4 +4,17 @@
     <string name="nav">Nav</string>
     <string name="project">Project</string>
     <string name="person">Person</string>
+
+    <string name="http_error_unauthorized">Unauthorized</string>
+    <string name="http_error_forbidden">Request Forbidden</string>
+    <string name="http_error_not_found">Not Found</string>
+    <string name="http_error_request_timeout">Request Timeout</string>
+    <string name="http_error_internal_server_error">Internal Server Error</string>
+    <string name="http_error_bad_gateway">Bad Gateway</string>
+    <string name="http_error_service_unavailable">Service Unavailable</string>
+    <string name="http_error_gateway_timeout">Gateway Timeout</string>
+    <string name="http_error_unknown">Unknown Error</string>
+    <string name="exception_connect">Connection Error</string>
+    <string name="exception_interrupted_io">Interrupted IO Exception</string>
+    <string name="exception_parse">Parse Error</string>
 </resources>

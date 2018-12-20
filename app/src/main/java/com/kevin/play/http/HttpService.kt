@@ -1,5 +1,7 @@
 package com.kevin.play.http
 
+import com.kevin.play.bean.NavBean
+import com.kevin.play.bean.NavData
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.http.GET
@@ -22,6 +24,9 @@ interface HttpService {
     fun getArticleList(@Path("page") page: Int): Observable<Map<String, Any>>
 
     @GET("banner/json")
-    fun getBanner():Observable<Map<String,Any>>
+    fun getBanner(): Observable<Map<String, Any>>
+
+    @GET("navi/json")
+    fun getNav(): Observable<NavBean>
 
 }

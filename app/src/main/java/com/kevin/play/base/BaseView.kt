@@ -9,6 +9,7 @@ import io.reactivex.disposables.Disposable
  */
 open interface BaseView<T> : AppBaseView<T> {
     fun addDisposable(d: Disposable)
-    fun showError(data:List<out Any>?)
+    fun showError(data: List<out Any>?)
+    fun showFailure(string: String, e: Throwable)
 
 }

@@ -27,7 +27,7 @@ class WebActivity : BaseActivity(), View.OnKeyListener {
         webSettings.useWideViewPort = true
         webSettings.setSupportZoom(true)
 //        webSettings.builtInZoomControls = true
-        webSettings.layoutAlgorithm=WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+        webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         webView.webViewClient = webViewClient
         webView.webChromeClient = webChromeClient
@@ -52,8 +52,8 @@ class WebActivity : BaseActivity(), View.OnKeyListener {
     private val webChromeClient = object : WebChromeClient() {
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             progressView.visibility = View.VISIBLE
-            if (newProgress>50){
-            progressView.alpha = (50 - newProgress/2) / 25.0F
+            if (newProgress > 50) {
+                progressView.alpha = (50 - newProgress / 2) / 25.0F
             }
             progressView.setmProgress(newProgress)
 

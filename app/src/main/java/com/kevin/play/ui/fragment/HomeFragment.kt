@@ -199,7 +199,6 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
         }
     }
 
-
     override fun onChildItemClick(viewId: Int, position: Int) {
         when (viewId) {
             R.id.iv_favorite -> {
@@ -211,6 +210,10 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
 
     override fun onLoadMore() {
         mPresenter!!.requestArticleList(pageNum++, Constants.REQUEST_LOAD_MORE)
+    }
+
+    override fun showFailure(string: String, e: Throwable) {
+        showFailureException(string,e)
     }
 
 }

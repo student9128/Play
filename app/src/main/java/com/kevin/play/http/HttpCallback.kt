@@ -12,18 +12,18 @@ import io.reactivex.schedulers.Schedulers
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-abstract class HttpCallback {
-    open fun request(observable: Observable<Map<String, Any>>) {
+abstract class HttpCallback<T> {
+    open fun request(observable: Observable<T>) {
         observable.subscribeOn(Schedulers.io())
             .doOnSubscribe { }
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : BaseObserve<Map<String, Any>>() {
+            .subscribe(object : BaseObserve<T>() {
                 override fun onSubscribe(d: Disposable) {
                     super.onSubscribe(d)
                 }
 
-                override fun onNext(t: Map<String, Any>) {
+                override fun onNext(t: T) {
                     super.onNext(t)
                     onSuccess(t)
                 }
@@ -40,6 +40,6 @@ abstract class HttpCallback {
             })
     }
 
-    open abstract fun onSuccess(response: Map<String, Any>)
+    open abstract fun onSuccess(response: T)
     open abstract fun onFailure(e: Throwable)
 }

@@ -1,6 +1,5 @@
 package com.kevin.play.base
 
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -24,7 +23,6 @@ open class BaseObserve<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-
     }
 
 }

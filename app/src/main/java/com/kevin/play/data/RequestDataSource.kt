@@ -1,5 +1,7 @@
 package com.kevin.play.data
 
+import com.kevin.play.bean.NavBean
+import com.kevin.play.bean.NavData
 import com.kevin.play.http.AppRetrofit
 import io.reactivex.Observable
 
@@ -33,6 +35,10 @@ class RequestDataSource : RemoteDataSource {
 
     override fun requestHomeArticleList(page: Int): Observable<Map<String, Any>> {
         return httpService.getArticleList(page)
+    }
+
+    override fun requestDataNav(): Observable<NavBean> {
+        return httpService.getNav()
     }
 
 }

@@ -76,6 +76,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintRight_toRightOf="@id/tv_title"
         app:layout_constraintTop_toTopOf="@id/ll"
+        android:gravity="end"
         tools:text="2018-12-19" />
 
     <ImageView

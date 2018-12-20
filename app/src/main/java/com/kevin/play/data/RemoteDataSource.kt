@@ -1,5 +1,7 @@
 package com.kevin.play.data
 
+import com.kevin.play.bean.NavBean
+import com.kevin.play.bean.NavData
 import io.reactivex.Observable
 
 /**
@@ -11,9 +13,11 @@ open interface RemoteDataSource {
     /**
      * request banner
      */
-    fun requestDataBanner():Observable<Map<String,Any>>
+    fun requestDataBanner(): Observable<Map<String, Any>>
 
-    fun requestHomeArticleList(page:Int):Observable<Map<String,Any>>
+    fun requestHomeArticleList(page: Int): Observable<Map<String, Any>>
+
+    fun requestDataNav(): Observable<NavBean>
 
 
 }

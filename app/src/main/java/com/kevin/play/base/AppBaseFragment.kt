@@ -4,17 +4,19 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.widget.Toast
+import com.kevin.play.constant.HttpStatusCode
 import com.kevin.play.util.LogUtils
 import com.kevin.play.util.ToastUtils
+import retrofit2.HttpException
 
 /**
  * Created by Kevin on 2018/12/5<br/>
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-open class AppBaseFragment :Fragment() {
+open class AppBaseFragment : Fragment() {
     open var TAG = javaClass.simpleName
-    open var mActivity:FragmentActivity?=null
+    open var mActivity: FragmentActivity? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -97,5 +99,16 @@ open class AppBaseFragment :Fragment() {
 
     open fun printV(format: String, vararg msg: Any?) {
         LogUtils.log("v", TAG, format, msg)
+    }
+
+    /**
+     * @param service 接口名
+     * @param e 异常信息
+     */
+    fun showFailureException(service: String, e: Throwable) {
+        if (e is HttpException) {
+            toast(service + "=>" + HttpStatusCode.getErrorDesResId(e.code()))
+        }
+
     }
 }

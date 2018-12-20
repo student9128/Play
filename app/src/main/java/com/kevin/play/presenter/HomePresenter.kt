@@ -47,6 +47,7 @@ open class HomePresenter(view: HomeContract.View, private var requestDataSource:
                 override fun onError(e: Throwable) {
                     super.onError(e)
                     view.showError(null)
+                    view.showFailure("requestDataBanner", e)
                 }
 
             })
@@ -55,7 +56,7 @@ open class HomePresenter(view: HomeContract.View, private var requestDataSource:
 
     override fun requestArticleList(page: Int, type: String) {
         val observable = requestDataSource.requestHomeArticleList(page)
-        var x = object : HttpCallback() {
+        var x = object : HttpCallback<Map<String, Any>>() {
 
             override fun onSuccess(response: Map<String, Any>) {
                 val r = Gson().toJson(response)
@@ -66,6 +67,7 @@ open class HomePresenter(view: HomeContract.View, private var requestDataSource:
             }
 
             override fun onFailure(e: Throwable) {
+
             }
 
         }
