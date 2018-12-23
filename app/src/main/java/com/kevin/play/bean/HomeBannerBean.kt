@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-data class HomeBannerBean(@SerializedName("data") val data: List<HomeBannerData>, val errorCode:String, val errorMessage:String)
+data class HomeBannerBean(@SerializedName("data") val data: List<HomeBannerData>, val errorCode: String, val errorMessage: String)
 
 data class HomeBannerData(val desc: String, val id: Int, val imagePath: String, val isVisible: Int, val order: Int, val title: String,
                           val type: Int, val url: String)

@@ -67,7 +67,7 @@ open class HomePresenter(view: HomeContract.View, private var requestDataSource:
             }
 
             override fun onFailure(e: Throwable) {
-
+                view.showFailure("requestArticleList", e)
             }
 
         }

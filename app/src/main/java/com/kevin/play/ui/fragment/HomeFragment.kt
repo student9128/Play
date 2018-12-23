@@ -213,7 +213,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     }
 
     override fun showFailure(string: String, e: Throwable) {
-        showFailureException(string,e)
+        showFailureException(string, e)
     }
 
 }

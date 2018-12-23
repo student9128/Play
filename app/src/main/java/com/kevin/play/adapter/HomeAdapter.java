@@ -6,7 +6,7 @@ import com.kevin.play.R;
 import com.kevin.play.base.BaseRecyclerViewAdapter;
 import com.kevin.play.base.BaseViewHolder;
 import com.kevin.play.bean.Content;
-import com.kevin.play.bean.Tag;
+import com.kevin.play.bean.ProjectTag;
 
 import java.util.List;
 
@@ -20,16 +20,16 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<Content> implements Bas
         super(context, data);
     }
 
-    public void updateData(List<Content> d) {
-        data.clear();
-        data.addAll(d);
-        notifyDataSetChanged();
-    }
-
-    public void addData(List<Content> d) {
-        data.addAll(d);
-        notifyDataSetChanged();
-    }
+//    public void updateData(List<Content> d) {
+//        getData().clear();
+//        getData().addAll(d);
+//        notifyDataSetChanged();
+//    }
+//
+//    public void addData(List<Content> d) {
+//        getData().addAll(d);
+//        notifyDataSetChanged();
+//    }
 
     @Override
     protected void bindViewHolder(BaseViewHolder viewHolder, Content content, int position) {
@@ -38,7 +38,7 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<Content> implements Bas
         boolean collect = content.getCollect();
         String niceDate = content.getNiceDate();
         String superChapterName = content.getSuperChapterName();
-        List<Tag> tags = content.getTags();
+        List<ProjectTag> tags = content.getTags();
         if (tags.size() > 0) {
             viewHolder.getView(R.id.tv_tag).setVisibility(View.VISIBLE);
             String name = tags.get(0).getName();

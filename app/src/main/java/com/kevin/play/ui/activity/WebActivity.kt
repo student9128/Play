@@ -26,7 +26,9 @@ class WebActivity : BaseActivity(), View.OnKeyListener {
         webSettings.domStorageEnabled = true
         webSettings.useWideViewPort = true
         webSettings.setSupportZoom(true)
-//        webSettings.builtInZoomControls = true
+        webSettings.builtInZoomControls = true
+        webSettings.displayZoomControls = false
+        webSettings.loadWithOverviewMode = true
         webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         webView.webViewClient = webViewClient

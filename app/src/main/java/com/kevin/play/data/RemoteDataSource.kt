@@ -2,6 +2,8 @@ package com.kevin.play.data
 
 import com.kevin.play.bean.NavBean
 import com.kevin.play.bean.NavData
+import com.kevin.play.bean.ProjectBean
+import com.kevin.play.bean.ProjectListBean
 import io.reactivex.Observable
 
 /**
@@ -19,5 +21,8 @@ open interface RemoteDataSource {
 
     fun requestDataNav(): Observable<NavBean>
 
+    fun requestProjectTree(): Observable<ProjectBean>
+
+    fun requestProjectList(page: Int, cid: String): Observable<ProjectListBean>
 
 }

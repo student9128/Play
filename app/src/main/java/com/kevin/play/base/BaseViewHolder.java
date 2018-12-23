@@ -1,12 +1,14 @@
 package com.kevin.play.base;
 
-import android.media.Image;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 /**
  * Created by Kevin on 2018/12/18<br/>
@@ -43,6 +45,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         ImageView iv = getView(viewId);
         iv.setImageResource(drawableId);
     }
+    public void setImageResource(int viewId, String url, Context context){
+        ImageView iv = getView(viewId);
+        Glide.with(context)
+                .load(url)
+                .apply(new RequestOptions().centerCrop())
+                .into(iv);
+
+    }
 
     public void onChildClick(final int viewId, final int position) {
         getView(viewId).setOnClickListener(new View.OnClickListener() {
@@ -55,13 +65,34 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    public void onSubItemClick(final int position) {
+        getRootView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onSubItemClick(position);
+                }
+            }
+        });
+    }
+
     private OnChildClickListener childClickListener;
+    private OnSubItemClickListener listener;
 
     public interface OnChildClickListener {
         void onChildClick(int viewId, int position);
+
+    }
+    public interface OnSubItemClickListener{
+        void onSubItemClick(int position);
+
     }
 
     public void setOnChildClickListener(OnChildClickListener childClickListener) {
         this.childClickListener = childClickListener;
+    }
+
+    public void setOnSubItem(OnSubItemClickListener listener) {
+        this.listener = listener;
     }
 }

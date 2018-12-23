@@ -3,21 +3,21 @@ package com.kevin.play.bean
 import com.google.gson.annotations.SerializedName
 
 /**
- * Created by Kevin on 2018/12/18<br/>
+ * Created by Kevin on 2018/12/20<br/>
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-data class HomeArticleListBean(
+data class ProjectListBean(
     @SerializedName("data")
-    val data: Data,
+    val data: ProjectData,
     val errorCode: Int,
     val errorMsg: String
 )
 
-data class Data(
+data class ProjectData(
     val curPage: Int,
     @SerializedName("datas")
-    val content: List<Content>,
+    val projectList: List<ProjectList>,
     val offset: Int,
     val over: Boolean,
     val pageCount: Int,
@@ -25,7 +25,7 @@ data class Data(
     val total: Int
 )
 
-data class Content(
+data class ProjectList(
     val apkLink: String,
     val author: String,
     val chapterId: Int,
@@ -43,7 +43,6 @@ data class Content(
     val publishTime: Long,
     val superChapterId: Int,
     val superChapterName: String,
-    @SerializedName("tags")
     val tags: List<ProjectTag>,
     val title: String,
     val type: Int,
@@ -52,7 +51,7 @@ data class Content(
     val zan: Int
 )
 
-data class Tag(
+data class ProjectTag(
     val name: String,
     val url: String
 )
