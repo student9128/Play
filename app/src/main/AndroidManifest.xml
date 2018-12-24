@@ -23,6 +23,8 @@
 
         </activity>
         <activity android:name=".ui.activity.WebActivity"/>
+        <activity android:name=".ui.activity.LoginActivity"
+            android:theme="@style/LoginTheme"/>
     </application>
 
 </manifest>

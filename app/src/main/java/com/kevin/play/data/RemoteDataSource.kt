@@ -25,4 +25,8 @@ open interface RemoteDataSource {
 
     fun requestProjectList(page: Int, cid: String): Observable<ProjectListBean>
 
+    fun requestLogin(username: String, password: String): Observable<Map<String, Any>>
+
+    fun requestRegister(username: String, password: String, rePassword: String): Observable<Map<String, Any>>
+
 }

@@ -13,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
  * Describe:<br/>
  */
 open abstract class BaseFragment : AppBaseFragment() {
+    open var tempData: MutableList<String> = ArrayList()
     open var mView: View? = null
     private var isUIVisible = false
     private var isViewCreated = false
@@ -32,6 +33,7 @@ open abstract class BaseFragment : AppBaseFragment() {
 
             }
         }
+        tempData.add("temp")
         return commonPage
     }
 

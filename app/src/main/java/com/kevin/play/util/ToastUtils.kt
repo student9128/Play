@@ -24,5 +24,8 @@ object ToastUtils {
         toast!!.duration = duration
         toast!!.show()
     }
+    fun showToast(context: Context, msg: String){
+        showToast(context,msg,Toast.LENGTH_SHORT)
+    }
 
 }

@@ -14,6 +14,7 @@ import io.reactivex.Observable
  */
 class RequestDataSource : RemoteDataSource {
 
+
     private val httpService = AppRetrofit.appRetrofit.getHttpService()
 
     companion object {
@@ -49,6 +50,14 @@ class RequestDataSource : RemoteDataSource {
 
     override fun requestProjectList(page: Int, cid: String): Observable<ProjectListBean> {
         return httpService.getProjectList(page, cid)
+    }
+
+    override fun requestLogin(username: String, password: String): Observable<Map<String, Any>> {
+        return httpService.login(username, password)
+    }
+
+    override fun requestRegister(username: String, password: String, rePassword: String): Observable<Map<String, Any>> {
+        return httpService.register(username, password, rePassword)
     }
 
 }

@@ -17,4 +17,14 @@
     <string name="exception_connect">Connection Error</string>
     <string name="exception_interrupted_io">Interrupted IO Exception</string>
     <string name="exception_parse">Parse Error</string>
+
+
+    <string name="user_name_placeholder">Please text your username</string>
+    <string name="password_placeholder">Please text your password</string>
+    <string name="rePassword_placeholder">Please text your password again</string>
+    <string name="auto_login">Auto Login</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="send">Send</string>
+    <string name="back">Back</string>
 </resources>

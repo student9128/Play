@@ -6,10 +6,7 @@ import com.kevin.play.bean.ProjectBean
 import com.kevin.play.bean.ProjectListBean
 import io.reactivex.Observable
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import java.util.*
 
 /**
@@ -40,13 +37,15 @@ interface HttpService {
     fun getProjectList(@Path("page") page: Int, @Query("cid") cid: String): Observable<ProjectListBean>
 
     @POST("user/login")
-    fun login(@Query("username") username: String, @Query("password") pwd: String)
+    @FormUrlEncoded
+    fun login(@Field("username") username: String, @Field("password") pwd: String): Observable<Map<String, Any>>
 
     @POST("user/register")
-    fun register(@Query("username") username: String, @Query("password") pwd: String,
-                 @Query("repassword") repwd: String)
+    @FormUrlEncoded
+    fun register(@Field("username") username: String, @Field("password") pwd: String,
+                 @Field("repassword") repwd: String): Observable<Map<String, Any>>
 
     @GET("user/logout/json")
-    fun logout()
+    fun logout(): Observable<Map<String, Any>>
 
 }

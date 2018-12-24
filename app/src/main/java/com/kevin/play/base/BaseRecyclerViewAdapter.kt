@@ -35,14 +35,14 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
     open fun updateData(d: List<T>) {
         data!!.clear()
         data!!.addAll(d)
-        dataType=3
+        dataType = 3
         notifyDataSetChanged()
     }
 
     open fun updateData(d: List<T>, showFoot: Boolean) {
         data!!.clear()
         data!!.addAll(d)
-        dataType=4
+        dataType = 4
         isShowFooter = showFoot
         notifyDataSetChanged()
     }
@@ -50,7 +50,9 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
     open fun addData(d: List<T>) {
         getAddDataCount(d)
         data!!.addAll(d)
-//        if ()
+        if (d.isEmpty()) {
+            dataType = 4
+        }
         notifyDataSetChanged()
     }
 
@@ -112,8 +114,11 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
         LogUtils.d("BaseRecyclerView", "position=$position")
         LogUtils.d("BaseRecyclerView", "getShowFoot=" + getShowFoot())
         return if (position >= itemCount - 1) {
-//            if (dataType=-1)
-            TYPE_FOOTER
+            if (dataType == 4) {
+                TYPE_NODATA_SHOW
+            } else {
+                TYPE_FOOTER
+            }
         } else {
             TYPE_NORMAL
         }
