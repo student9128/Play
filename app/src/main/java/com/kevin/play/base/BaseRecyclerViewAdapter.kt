@@ -42,8 +42,11 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
     open fun updateData(d: List<T>, showFoot: Boolean) {
         data!!.clear()
         data!!.addAll(d)
-        dataType = 4
-        isShowFooter = showFoot
+        dataType = if (showFoot) {
+            4
+        } else {
+            3
+        }
         notifyDataSetChanged()
     }
 
@@ -114,10 +117,10 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
         LogUtils.d("BaseRecyclerView", "position=$position")
         LogUtils.d("BaseRecyclerView", "getShowFoot=" + getShowFoot())
         return if (position >= itemCount - 1) {
-            if (dataType == 4) {
-                TYPE_NODATA_SHOW
-            } else {
-                TYPE_FOOTER
+            when (dataType) {
+                4 -> TYPE_NODATA_SHOW
+                3 -> TYPE_NODATA
+                else -> TYPE_FOOTER
             }
         } else {
             TYPE_NORMAL

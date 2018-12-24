@@ -1,6 +1,7 @@
 package com.kevin.play.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import com.kevin.play.R
 import com.kevin.play.base.BaseRecyclerViewAdapter
 import com.kevin.play.base.BaseViewHolder
@@ -14,13 +15,14 @@ import com.kevin.play.bean.ProjectTitle
  */
 open class ProjectTreeAdapter(context: Context, data: MutableList<ProjectTitle>?) : BaseRecyclerViewAdapter<ProjectTitle>(context, data), BaseViewHolder.OnSubItemClickListener {
 
-
+    private var index = 0;
     private var listener: OnRecyclerItemClickListener? = null
     override fun bindViewHolder(viewHolder: BaseViewHolder, t: ProjectTitle, position: Int) {
         val name = t.name
         viewHolder.setText(R.id.tv_title, name)
         viewHolder.onSubItemClick(position)
         viewHolder.setOnSubItem(this)
+
     }
 
     override fun layoutId(): Int {
@@ -34,7 +36,9 @@ open class ProjectTreeAdapter(context: Context, data: MutableList<ProjectTitle>?
     override fun onSubItemClick(position: Int) {
         if (listener != null) {
             listener!!.onRecyclerItemClick(position)
+            index = position
         }
+
     }
 
 }

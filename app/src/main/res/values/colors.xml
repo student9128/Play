@@ -12,5 +12,6 @@
     <color name="transparent">#00000000</color>
     <color name="gray">#bfbfbf</color>
     <color name="gray_1">#EEEEEE</color>
+    <color name="orange">#f05a28</color>
 
 </resources>

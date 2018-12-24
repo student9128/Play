@@ -1,6 +1,7 @@
 package com.kevin.play.base;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.kevin.play.R;
 
 /**
  * Created by Kevin on 2018/12/18<br/>
@@ -45,13 +47,18 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         ImageView iv = getView(viewId);
         iv.setImageResource(drawableId);
     }
-    public void setImageResource(int viewId, String url, Context context){
+
+    public void setImageResource(int viewId, String url, Context context) {
         ImageView iv = getView(viewId);
         Glide.with(context)
                 .load(url)
                 .apply(new RequestOptions().centerCrop())
                 .into(iv);
 
+    }
+
+    public void setBackground(int viewId, int r) {
+        getView(viewId).setBackgroundColor(r);
     }
 
     public void onChildClick(final int viewId, final int position) {
@@ -83,7 +90,8 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         void onChildClick(int viewId, int position);
 
     }
-    public interface OnSubItemClickListener{
+
+    public interface OnSubItemClickListener {
         void onSubItemClick(int position);
 
     }

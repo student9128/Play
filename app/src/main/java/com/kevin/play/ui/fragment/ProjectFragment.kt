@@ -30,7 +30,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
     private var treeData: MutableList<ProjectTitle> = ArrayList()
     private var listData: MutableList<ProjectList> = ArrayList()
     var pageNum: Int = 1
-    var cid=""
+    var cid = ""
 
     companion object {
         fun newInstance(args: String): BaseFragment {
@@ -74,7 +74,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
                 val id = treeData[position].id
                 cid = treeData[position].id.toString()
                 mPresenter!!.requestDataProjectList(1, id.toString(), Constants.REQUEST_REFRESH)
-                pageNum=1
+                pageNum = 1
             }
 
         })
@@ -90,7 +90,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
     }
 
     override fun showProjectTree(d: List<ProjectTitle>) {
-        treeAdapter!!.updateData(d,true)
+        treeAdapter!!.updateData(d, false)
 //        treeAdapter!!.setShowFoot(true)
         verifyState(d)
         if (d.isNotEmpty()) {
@@ -103,7 +103,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
     override fun showProjectList(d: List<ProjectList>, type: String) {
         when (type) {
             Constants.REQUEST_REFRESH -> {
-                listAdapter!!.updateData(d)
+                listAdapter!!.updateData(d,true)
             }
             Constants.REQUEST_LOAD_MORE -> {
                 listAdapter!!.addData(d)
