@@ -74,6 +74,15 @@ open class AppRetrofit {
             .build()
     }
 
+    constructor(baseUrl: String) {
+        retrofit = Retrofit.Builder()
+            .client(initBuilder().build())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(baseUrl)
+            .build()
+    }
+
     private fun <T> create(service: Class<T>): T {
         return retrofit.create(service)
     }

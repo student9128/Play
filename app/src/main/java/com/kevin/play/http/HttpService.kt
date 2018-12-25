@@ -1,9 +1,6 @@
 package com.kevin.play.http
 
-import com.kevin.play.bean.NavBean
-import com.kevin.play.bean.NavData
-import com.kevin.play.bean.ProjectBean
-import com.kevin.play.bean.ProjectListBean
+import com.kevin.play.bean.*
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.http.*
@@ -15,6 +12,9 @@ import java.util.*
  * Describe:<br/>
  */
 interface HttpService {
+    @GET("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN")
+    fun getBingWallpaper(): Observable<Splash>
+
     @GET("wxarticle/chapters/json")
     fun getWxArticleList(): Call<Map<String, Any>>
 
@@ -47,5 +47,6 @@ interface HttpService {
 
     @GET("user/logout/json")
     fun logout(): Observable<Map<String, Any>>
+
 
 }
