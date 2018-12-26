@@ -42,20 +42,18 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
     open fun updateData(d: List<T>, showFoot: Boolean) {
         data!!.clear()
         data!!.addAll(d)
+        notifyDataSetChanged()
+        isShowFooter = showFoot
         dataType = if (showFoot) {
-            4
+            if (d.isEmpty()) 6 else 2
         } else {
             3
         }
-        notifyDataSetChanged()
     }
 
     open fun addData(d: List<T>) {
         getAddDataCount(d)
         data!!.addAll(d)
-        if (d.isEmpty()) {
-            dataType = 4
-        }
         notifyDataSetChanged()
     }
 
@@ -65,7 +63,12 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
 
 
     private fun getAddDataCount(d: List<T>) {
-        dataType = d.size
+        dataType = if (d.isNotEmpty()) {
+            2
+        } else {
+            4
+        }
+
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): BaseViewHolder {
@@ -73,8 +76,9 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
         view = when (viewType) {
             TYPE_FOOTER -> LayoutInflater.from(context).inflate(R.layout.layout_footer, viewGroup, false)
             TYPE_NORMAL -> LayoutInflater.from(context).inflate(layoutId(), viewGroup, false)
-            TYPE_NODATA -> LayoutInflater.from(context).inflate(R.layout.layout_footer_nodata, viewGroup, false)
-            TYPE_NODATA_SHOW -> LayoutInflater.from(context).inflate(R.layout.layout_footer_nodata_show, viewGroup, false)
+            TYPE_NO_DATA -> LayoutInflater.from(context).inflate(R.layout.layout_footer_nodata, viewGroup, false)
+            TYPE_NO_DATA_SHOW -> LayoutInflater.from(context).inflate(R.layout.layout_footer_nodata_show, viewGroup, false)
+            TYPE_EMPTY -> LayoutInflater.from(context).inflate(R.layout.layout_empty_page, viewGroup, false)
             else -> LayoutInflater.from(context).inflate(layoutId(), viewGroup, false)
         }
         return BaseViewHolder(view!!)
@@ -100,9 +104,9 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
 //                    loadMoreListener!!.onLoadMore()
 //                }
 //            }
-//            TYPE_NODATA -> {
+//            TYPE_NO_DATA -> {
 //            }
-//            TYPE_NODATA_SHOW -> {
+//            TYPE_NO_DATA_SHOW -> {
 //            }
 //        }
 
@@ -110,17 +114,23 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
 
 
     override fun getItemCount(): Int {
-        return if (data == null) 0 else data!!.size//开启自动加载更多
+        return if (data == null) 0 else {
+            if (isShowFooter) data!!.size + 1 else data!!.size
+        }//开启自动加载更多
     }
 
     override fun getItemViewType(position: Int): Int {
+        var i = 0
         LogUtils.d("BaseRecyclerView", "position=$position")
         LogUtils.d("BaseRecyclerView", "getShowFoot=" + getShowFoot())
-        return if (position >= itemCount - 1) {
+        return if (position == itemCount - 1) {
+            LogUtils.i("Project", "i=" + (i++) + "-dataType-" + dataType)
             when (dataType) {
-                4 -> TYPE_NODATA_SHOW
-                3 -> TYPE_NODATA
-                else -> TYPE_FOOTER
+                4 -> TYPE_NO_DATA_SHOW
+                3 -> TYPE_NO_DATA
+                2 -> TYPE_FOOTER
+                6 -> TYPE_EMPTY
+                else -> TYPE_NO_DATA_SHOW
             }
         } else {
             TYPE_NORMAL
@@ -150,9 +160,10 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
     companion object {
         private const val TYPE_NORMAL = 1
         private const val TYPE_FOOTER = 2
-        private const val TYPE_NODATA = 3
-        private const val TYPE_NODATA_SHOW = 4
+        private const val TYPE_NO_DATA = 3
+        private const val TYPE_NO_DATA_SHOW = 4
         private const val TYPE_ERROR = 5
+        private const val TYPE_EMPTY = 6
     }
 
 

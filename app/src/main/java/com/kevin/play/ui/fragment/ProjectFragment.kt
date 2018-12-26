@@ -107,7 +107,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
             }
             Constants.REQUEST_LOAD_MORE -> {
                 listAdapter!!.addData(d)
-                listAdapter!!.setShowFoot(true)
+//                listAdapter!!.setShowFoot(true)
             }
         }
     }
@@ -129,7 +129,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
     }
 
     override fun onLoadMore() {
-        mPresenter!!.requestDataProjectList(pageNum++, cid, Constants.REQUEST_LOAD_MORE)
+        mPresenter!!.requestDataProjectList(++pageNum, cid, Constants.REQUEST_LOAD_MORE)
     }
 
 }

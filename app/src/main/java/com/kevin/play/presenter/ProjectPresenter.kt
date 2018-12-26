@@ -7,6 +7,7 @@ import com.kevin.play.bean.ProjectTitle
 import com.kevin.play.contract.ProjectContract
 import com.kevin.play.data.RequestDataSource
 import com.kevin.play.http.HttpCallback
+import com.kevin.play.util.LogUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -23,6 +24,7 @@ class ProjectPresenter(var view: ProjectContract.View, private var requestDataSo
             override fun onSuccess(response: ProjectBean) {
                 val data = response.data
                 view.showProjectTree(data)
+                LogUtils.d("Project","ProjectTree")
 
             }
 
@@ -44,7 +46,10 @@ class ProjectPresenter(var view: ProjectContract.View, private var requestDataSo
             .subscribe(object : BaseObserve<ProjectListBean>() {
                 override fun onNext(t: ProjectListBean) {
                     super.onNext(t)
+                    LogUtils.d("Project","ProjectList")
                     val projectList = t.data.projectList
+                    LogUtils.d("Project","ProjectList.size="+projectList.size+"=type="+type)
+
                     view.showProjectList(projectList, type)
                 }
 
