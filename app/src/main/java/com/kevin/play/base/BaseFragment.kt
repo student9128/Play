@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kevin.play.constant.Constants
 import com.kevin.play.view.CommonPage
 import io.reactivex.disposables.CompositeDisposable
 
@@ -20,6 +21,7 @@ open abstract class BaseFragment : AppBaseFragment() {
     var cDisposable = CompositeDisposable()
     private var commonPage: CommonPage? = null
     private var mState: Int = -2
+    open var isLogin = getBooleanSP(Constants.KEY_LOGIN_STATE)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (commonPage == null) {
             commonPage = object : CommonPage(context) {

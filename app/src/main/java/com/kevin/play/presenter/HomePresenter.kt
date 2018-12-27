@@ -73,4 +73,39 @@ open class HomePresenter(view: HomeContract.View, private var requestDataSource:
         }
         x.request(observable)
     }
+
+    override fun requestCollectArticle(id: Int,position:Int) {
+        val observable = requestDataSource.requestCollectArticle(id)
+        var x = object :HttpCallback<Map<String,Any>>(){
+            override fun onSuccess(response: Map<String, Any>) {
+                val r = Gson().toJson(response)
+                LogUtils.d(TAG, "response==$r")
+                view.notifyCollectItem(position)
+                view.showTips("收藏成功")
+
+            }
+
+            override fun onFailure(e: Throwable) {
+            }
+
+        }
+        x.request(observable)
+    }
+
+    override fun requestUnCollectArticle(id: Int,position:Int) {
+        val observable = requestDataSource.requestUnCollectArticle(id)
+        var x = object :HttpCallback<Map<String,Any>>(){
+            override fun onSuccess(response: Map<String, Any>) {
+                val r = Gson().toJson(response)
+                LogUtils.d(TAG, "response==$r")
+                view.notifyCollectItem(position)
+                view.showTips("取消收藏成功")
+            }
+
+            override fun onFailure(e: Throwable) {
+            }
+
+        }
+        x.request(observable)
+    }
 }

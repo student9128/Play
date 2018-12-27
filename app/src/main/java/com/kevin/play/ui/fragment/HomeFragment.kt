@@ -202,18 +202,38 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     override fun onChildItemClick(viewId: Int, position: Int) {
         when (viewId) {
             R.id.iv_favorite -> {
-                toast(articleData[position].title)
+                if (isLogin) {
+                    val content = articleData[position]
+                    val id = content.id
+                    val collect = content.collect
+                    if (collect) {
+                        mPresenter!!.requestUnCollectArticle(id, position)
+                    } else {
+                        mPresenter!!.requestCollectArticle(id, position)
+                    }
+                } else {
+                    toast(getString(R.string.login_tip))
+                }
                 printW("position------$position")
             }
         }
     }
 
     override fun onLoadMore() {
-        mPresenter!!.requestArticleList(pageNum++, Constants.REQUEST_LOAD_MORE)
+        mPresenter!!.requestArticleList(++pageNum, Constants.REQUEST_LOAD_MORE)
     }
 
     override fun showFailure(string: String, e: Throwable) {
         showFailureException(string, e)
     }
+
+    override fun notifyCollectItem(position: Int) {
+        val content = articleData[position]
+        val collect = content.collect
+        content.collect = !collect
+        homeAdapter!!.setData(position, content)
+
+    }
+
 
 }

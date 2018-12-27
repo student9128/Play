@@ -57,6 +57,11 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
         notifyDataSetChanged()
     }
 
+    open fun setData(position: Int, d: T) {
+        data!![position] = d
+        notifyItemChanged(position)
+    }
+
     open fun dataError() {
         dataType = -1
     }

@@ -1,9 +1,9 @@
 package com.kevin.play.presenter
 
+import com.google.gson.Gson
 import com.kevin.play.base.BaseObserve
 import com.kevin.play.bean.ProjectBean
 import com.kevin.play.bean.ProjectListBean
-import com.kevin.play.bean.ProjectTitle
 import com.kevin.play.contract.ProjectContract
 import com.kevin.play.data.RequestDataSource
 import com.kevin.play.http.HttpCallback
@@ -63,4 +63,36 @@ class ProjectPresenter(var view: ProjectContract.View, private var requestDataSo
                 }
             })
     }
+    override fun requestCollectArticle(id: Int,position:Int) {
+        val observable = requestDataSource.requestCollectArticle(id)
+        var x = object :HttpCallback<Map<String,Any>>(){
+            override fun onSuccess(response: Map<String, Any>) {
+                val r = Gson().toJson(response)
+                view.notifyCollectItem(position)
+                view.showTips("收藏成功")
+
+            }
+
+            override fun onFailure(e: Throwable) {
+            }
+
+        }
+        x.request(observable)
+    }
+
+    override fun requestUnCollectArticle(id: Int,position:Int) {
+        val observable = requestDataSource.requestUnCollectArticle(id)
+        var x = object :HttpCallback<Map<String,Any>>(){
+            override fun onSuccess(response: Map<String, Any>) {
+                val r = Gson().toJson(response)
+                view.notifyCollectItem(position)
+                view.showTips("取消收藏成功")
+            }
+
+            override fun onFailure(e: Throwable) {
+            }
+        }
+        x.request(observable)
+    }
+
 }

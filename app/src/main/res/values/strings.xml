@@ -28,4 +28,5 @@
     <string name="send">Send</string>
     <string name="back">Back</string>
     <string name="splash">壁纸来自必应API,\n内容来自WanAndroid API</string>
+    <string name="login_tip">Please login first</string>
 </resources>

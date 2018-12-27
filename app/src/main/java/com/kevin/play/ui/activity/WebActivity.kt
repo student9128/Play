@@ -53,17 +53,17 @@ class WebActivity : BaseActivity(), View.OnKeyListener {
     }
     private val webChromeClient = object : WebChromeClient() {
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
-            progressView.visibility = View.VISIBLE
-            if (newProgress > 50) {
-                progressView.alpha = (50 - newProgress / 2) / 25.0F
-            }
-            progressView.setmProgress(newProgress)
-
-//            progressBarView.visibility = View.VISIBLE
-//            if (newProgress>50){
-//            progressBarView.alpha = (50-newProgress/2)/50f
+//            progressView.visibility = View.VISIBLE
+//            if (newProgress > 50) {
+//                progressView.alpha = (50 - newProgress / 2) / 25.0F
 //            }
-//            progressBarView.setProgress(newProgress)
+//            progressView.setmProgress(newProgress)
+
+            progressBarView.visibility = View.VISIBLE
+            if (newProgress > 50) {
+                progressBarView.alpha = (50 - newProgress / 2) / 50f
+            }
+            progressBarView.setProgress(newProgress)
         }
     }
 

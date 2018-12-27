@@ -60,4 +60,12 @@ class RequestDataSource : RemoteDataSource {
         return httpService.register(username, password, rePassword)
     }
 
+    override fun requestCollectArticle(id: Int): Observable<Map<String, Any>> {
+        return httpService.collectArticle(id)
+    }
+
+    override fun requestUnCollectArticle(id: Int): Observable<Map<String, Any>> {
+        return httpService.unCollectArticle(id)
+    }
+
 }

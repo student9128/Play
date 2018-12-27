@@ -15,6 +15,18 @@ interface HttpService {
     @GET("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN")
     fun getBingWallpaper(): Observable<Splash>
 
+    @POST("user/login")
+    @FormUrlEncoded
+    fun login(@Field("username") username: String, @Field("password") pwd: String): Observable<Map<String, Any>>
+
+    @POST("user/register")
+    @FormUrlEncoded
+    fun register(@Field("username") username: String, @Field("password") pwd: String,
+                 @Field("repassword") repwd: String): Observable<Map<String, Any>>
+
+    @GET("user/logout/json")
+    fun logout(): Observable<Map<String, Any>>
+
     @GET("wxarticle/chapters/json")
     fun getWxArticleList(): Call<Map<String, Any>>
 
@@ -36,17 +48,10 @@ interface HttpService {
     @GET("project/list/{page}/json?")
     fun getProjectList(@Path("page") page: Int, @Query("cid") cid: String): Observable<ProjectListBean>
 
-    @POST("user/login")
-    @FormUrlEncoded
-    fun login(@Field("username") username: String, @Field("password") pwd: String): Observable<Map<String, Any>>
+    @POST("lg/collect/{id}/json")
+    fun collectArticle(@Path("id") id: Int): Observable<Map<String, Any>>
 
-    @POST("user/register")
-    @FormUrlEncoded
-    fun register(@Field("username") username: String, @Field("password") pwd: String,
-                 @Field("repassword") repwd: String): Observable<Map<String, Any>>
-
-    @GET("user/logout/json")
-    fun logout(): Observable<Map<String, Any>>
-
+    @POST("lg/uncollect_originId/{id}/json")
+    fun unCollectArticle(@Path("id") id: Int): Observable<Map<String, Any>>
 
 }

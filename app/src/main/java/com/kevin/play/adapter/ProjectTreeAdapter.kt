@@ -22,6 +22,12 @@ open class ProjectTreeAdapter(context: Context, data: MutableList<ProjectTitle>?
         viewHolder.setText(R.id.tv_title, name)
         viewHolder.onSubItemClick(position)
         viewHolder.setOnSubItem(this)
+        if (index==position){
+            viewHolder.setBackground(R.id.cl_container,ContextCompat.getColor(context,R.color.white_4))
+        }else{
+            viewHolder.setBackground(R.id.cl_container,ContextCompat.getColor(context,R.color.white))
+
+        }
 
     }
 
@@ -37,6 +43,7 @@ open class ProjectTreeAdapter(context: Context, data: MutableList<ProjectTitle>?
         if (listener != null) {
             listener!!.onRecyclerItemClick(position)
             index = position
+            notifyDataSetChanged()
         }
 
     }

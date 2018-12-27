@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -58,7 +59,8 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setBackground(int viewId, int r) {
-        getView(viewId).setBackgroundColor(r);
+        ViewGroup v=getView(viewId);
+        v.setBackgroundColor(r);
     }
 
     public void onChildClick(final int viewId, final int position) {

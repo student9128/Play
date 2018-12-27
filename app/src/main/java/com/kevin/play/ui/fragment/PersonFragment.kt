@@ -8,8 +8,10 @@ import android.widget.TextView
 import com.kevin.play.R
 import com.kevin.play.base.BaseFragment
 import com.kevin.play.bean.LoginData
+import com.kevin.play.constant.Constants
 import com.kevin.play.contract.PersonContract
 import com.kevin.play.ui.activity.LoginActivity
+import com.kevin.play.util.SPUtils
 import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
@@ -39,6 +41,12 @@ class PersonFragment : BaseFragment() {
     override fun initView() {
         ivAvatar = mView!!.findViewById(R.id.iv_avatar)
         tvLogin = mView!!.findViewById(R.id.tv_login_state)
+        val userName = getStringSP(Constants.KEY_USER_NAME)
+        if (userName.isNotEmpty()) {
+            tvLogin!!.text = userName
+            tvLogin!!.isClickable = false
+            ivAvatar!!.isClickable = false
+        }
     }
 
     override fun initListener() {
@@ -58,8 +66,11 @@ class PersonFragment : BaseFragment() {
             val data = data!!.getSerializableExtra("userInfo") as LoginData
             val username = data.username
             toast("$username 登录成功")
-            tvLogin!!.text = "已登录"
+            tvLogin!!.text = username
+            tvLogin!!.isClickable = false
             ivAvatar!!.isClickable = false
+            SPUtils.setSP(Constants.KEY_USER_NAME, username)
+            SPUtils.setSP(Constants.KEY_LOGIN_STATE, true)
 
         }
     }

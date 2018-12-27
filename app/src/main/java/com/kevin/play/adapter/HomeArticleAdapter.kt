@@ -30,6 +30,11 @@ class HomeArticleAdapter(var context: Context, var data: MutableList<Content>) :
         notifyDataSetChanged()
     }
 
+    fun setData(position: Int, d: Content) {
+        data[position] = d
+        notifyItemChanged(position)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var vh: RecyclerView.ViewHolder
         return when (viewType) {

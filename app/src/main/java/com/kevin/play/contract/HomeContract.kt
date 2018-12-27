@@ -18,6 +18,10 @@ open class HomeContract {
         fun requestDataBanner()
 
         fun requestArticleList(page: Int,type: String)
+
+        fun requestCollectArticle(id:Int,position:Int)
+
+        fun requestUnCollectArticle(id: Int,position:Int)
     }
 
     interface View : BaseView<Presenter> {
@@ -29,5 +33,7 @@ open class HomeContract {
         fun showArticleList(data: List<Content>,type:String)
 
         fun showTips(msg: String)
+
+        fun notifyCollectItem(position: Int)
     }
 }

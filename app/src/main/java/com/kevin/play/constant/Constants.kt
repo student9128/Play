@@ -10,4 +10,15 @@ object Constants {
 
     const val REQUEST_LOAD_MORE = "loadMore"
     const val REQUEST_REFRESH = "refresh"
+
+    const val KEY_LOGIN = "user/login"
+    const val KEY_REGISTER = "user/register"
+    const val KEY_SET_COOKIE = "set-cookie"
+
+    const val KEY_COOKIE_STORE="cookie_persistence"
+
+    const val KEY_USER_NAME = "userName"
+    const val KEY_LOGIN_STATE = "loginState"
+
+
 }

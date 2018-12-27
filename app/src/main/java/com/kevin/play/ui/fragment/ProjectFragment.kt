@@ -22,7 +22,7 @@ import io.reactivex.disposables.Disposable
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAdapter.OnLoadMoreListener {
+class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAdapter.OnLoadMoreListener, ProjectListAdapter.OnChildItemClickListener {
 
     private var mPresenter: ProjectContract.Presenter? = null
     private var treeAdapter: ProjectTreeAdapter? = null
@@ -83,6 +83,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
             }
 
         })
+        listAdapter!!.setOnChildItemClickListener(this)
     }
 
     override fun loadData() {
@@ -103,7 +104,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
     override fun showProjectList(d: List<ProjectList>, type: String) {
         when (type) {
             Constants.REQUEST_REFRESH -> {
-                listAdapter!!.updateData(d,true)
+                listAdapter!!.updateData(d, true)
             }
             Constants.REQUEST_LOAD_MORE -> {
                 listAdapter!!.addData(d)
@@ -130,6 +131,37 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
 
     override fun onLoadMore() {
         mPresenter!!.requestDataProjectList(++pageNum, cid, Constants.REQUEST_LOAD_MORE)
+    }
+
+    override fun onChildItemClick(viewId: Int, position: Int) {
+        when (viewId) {
+            R.id.iv_favorite -> {
+                if (isLogin) {
+                    val projectList = listData[position]
+                    val id = projectList.id
+                    val collect = projectList.collect
+                    if (collect) {
+                        mPresenter!!.requestUnCollectArticle(id, position)
+                    } else {
+                        mPresenter!!.requestCollectArticle(id, position)
+                    }
+                } else {
+                    toast(getString(R.string.login_tip))
+                }
+            }
+        }
+    }
+
+    override fun showTips(msg: String) {
+        toast(msg)
+    }
+
+    override fun notifyCollectItem(position: Int) {
+        val projectList = listData[position]
+        val id = projectList.id
+        val collect = projectList.collect
+        projectList.collect = !collect
+        listAdapter!!.setData(position, projectList)
     }
 
 }

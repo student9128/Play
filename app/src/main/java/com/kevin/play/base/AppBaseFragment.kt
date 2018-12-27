@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 import com.kevin.play.constant.HttpStatusCode
 import com.kevin.play.util.LogUtils
+import com.kevin.play.util.SPUtils
 import com.kevin.play.util.ToastUtils
 import retrofit2.HttpException
 
@@ -99,6 +100,14 @@ open class AppBaseFragment : Fragment() {
 
     open fun printV(format: String, vararg msg: Any?) {
         LogUtils.log("v", TAG, format, msg)
+    }
+
+    open fun getStringSP(key: String): String {
+        return SPUtils.getStringSP(key)
+    }
+
+    open fun getBooleanSP(key: String): Boolean {
+        return SPUtils.getBooleanSP(key)
     }
 
     /**

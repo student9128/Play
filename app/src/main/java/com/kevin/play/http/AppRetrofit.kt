@@ -1,11 +1,17 @@
 package com.kevin.play.http
 
+import android.content.Context
 import com.kevin.play.BuildConfig
+import com.kevin.play.base.BaseApplication
+import com.kevin.play.constant.Constants
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.HashSet
 import java.util.concurrent.TimeUnit
 
 /**
@@ -106,7 +112,98 @@ open class AppRetrofit {
         builder.retryOnConnectionFailure(true)
             .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
+            .addInterceptor(SaveCookieInterceptor())
+            .addInterceptor(RequestCookiesInterceptor())
         return builder
     }
+
+
+    class SaveCookieInterceptor : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val response = chain.proceed(request)
+            val requestUrl = request.url().toString()
+            val domain = request.url().host()
+            if ((requestUrl.contains(Constants.KEY_LOGIN) || requestUrl.contains(Constants.KEY_REGISTER))
+                && response.header(Constants.KEY_SET_COOKIE)!!.isNotEmpty()
+            ) {
+                val cookies = response.headers(Constants.KEY_SET_COOKIE)
+                val cookie = encodeCookie(cookies)
+                saveCookie(requestUrl, domain, cookie)
+
+            }
+
+            return response
+
+        }
+
+        private fun saveCookie(url: String, domain: String, cookies: String) {
+            val context = BaseApplication.getContext()
+            val sp = context.getSharedPreferences(Constants.KEY_COOKIE_STORE, Context.MODE_PRIVATE)
+            val editor = sp.edit()
+
+            if (url.isNotEmpty()) {
+                editor.putString(url, cookies)
+            }
+            if (domain.isNotEmpty()) {
+                editor.putString(domain, cookies)
+            }
+            editor.commit()
+
+        }
+
+        //整合cookie为唯一字符串
+        private fun encodeCookie(cookies: List<String>): String {
+            var sb = StringBuilder()
+            val set = HashSet<String>()
+            cookies.map { cookie -> cookie.split(";").toTypedArray() }
+                .forEach { c ->
+                    c.filterNot { s -> set.contains(s) }
+                        .forEach { set.add(it) }
+                }
+            val iterator = set.iterator()
+            while (iterator.hasNext()) {
+                val cookie = iterator.next()
+                sb.append(cookie).append(";")
+            }
+            val lastIndexOf = sb.lastIndexOf(";")
+            if (sb.length - 1 == lastIndexOf) {
+                sb.deleteCharAt(lastIndexOf)
+            }
+            return sb.toString()
+        }
+
+    }
+
+    class RequestCookiesInterceptor : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            val builder = request.newBuilder()
+            val requestUrl = request.url().toString()
+            val domain = request.url().host()
+            val cookie = getCookie(domain)
+            if (cookie.isNotEmpty()) {
+                builder.addHeader("Cookie", cookie)
+            }
+            return chain.proceed(builder.build())
+        }
+
+        private fun getCookie(domain: String): String {
+            val context = BaseApplication.getContext()
+            val sp = context.getSharedPreferences(Constants.KEY_COOKIE_STORE, Context.MODE_PRIVATE)
+//            if (url.isNotEmpty() && sp.contains(url)) {
+//                return sp.getString(url, "")
+//            }
+
+            return if (domain.isNotEmpty()) {
+                sp.getString(domain, "")
+            } else {
+                ""
+            }
+
+        }
+
+    }
+
 
 }

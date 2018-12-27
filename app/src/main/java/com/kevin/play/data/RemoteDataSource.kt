@@ -29,4 +29,9 @@ open interface RemoteDataSource {
 
     fun requestRegister(username: String, password: String, rePassword: String): Observable<Map<String, Any>>
 
+    fun requestCollectArticle(id: Int): Observable<Map<String, Any>>
+
+    fun requestUnCollectArticle(id: Int): Observable<Map<String, Any>>
+
+
 }

@@ -1,6 +1,8 @@
 package com.kevin.play
 
 import android.animation.ArgbEvaluator
+import android.app.Activity
+import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -22,6 +24,8 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
     private var tabList = intArrayOf(R.string.home, R.string.nav, R.string.project, R.string.person)
     private var fragmentList: ArrayList<Fragment>? = ArrayList()
     private var adapter: TabFragmentAdapter? = null
+    private var homeFragment: HomeFragment? = null
+    private var projectFragment: ProjectFragment? = null
     override fun setLayoutResId(): Int {
         return R.layout.activity_main
     }
@@ -42,7 +46,7 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
         for (i in 0..tabLayout.tabCount) {
             tabLayout.getTabAt(i)?.customView = adapter!!.getTabView(i)
         }
-
+        setToolbarTitle(0)
 
     }
 
@@ -115,7 +119,21 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
 
     override fun onPageSelected(position: Int) {
         viewPager.setCurrentItem(position, false)
+        setToolbarTitle(position)
 
+
+    }
+
+    private fun setToolbarTitle(position: Int) {
+        supportActionBar!!.title = when (position) {
+            0 -> getString(R.string.home)
+            1 -> getString(R.string.nav)
+            2 -> getString(R.string.project)
+            3 -> getString(R.string.person)
+            else -> {
+                getString(R.string.app_name)
+            }
+        }
     }
 
     private fun setTabSelected(tab: TabLayout.Tab?) {
@@ -128,6 +146,7 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
 //        tabIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN)
         tabIconFilled.imageAlpha = 255
         tabIcon.imageAlpha = 0
+        setToolbarTitle(tab.position)
     }
 
 
@@ -141,5 +160,18 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
 //        tabIcon.setColorFilter(ContextCompat.getColor(this, R.color.gray), PorterDuff.Mode.SRC_IN)
         tabIconFilled.imageAlpha = 0
         tabIcon.imageAlpha = 255
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (Activity.RESULT_OK == resultCode) {
+            homeFragment!!.loadData()
+            projectFragment!!.loadData()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
     }
 }
