@@ -30,6 +30,10 @@ class WebActivity : BaseActivity(), View.OnKeyListener {
         webSettings.displayZoomControls = false
         webSettings.loadWithOverviewMode = true
         webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+        webSettings.databaseEnabled = true
+        webSettings.cacheMode=WebSettings.LOAD_DEFAULT
+        webSettings.setAppCacheEnabled(true)
+//        webSettings.setAppCachePath()
         webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         webView.webViewClient = webViewClient
         webView.webChromeClient = webChromeClient

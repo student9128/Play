@@ -6,6 +6,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Kevin on 2018/12/19<br/>
@@ -16,6 +17,7 @@ abstract class HttpCallback<T> {
     open fun request(observable: Observable<T>) {
         observable.subscribeOn(Schedulers.io())
             .doOnSubscribe { }
+            .throttleFirst(1500, TimeUnit.MICROSECONDS)
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : BaseObserve<T>() {

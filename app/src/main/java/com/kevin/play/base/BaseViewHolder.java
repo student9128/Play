@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.Transition;
 import com.kevin.play.R;
 
 /**
@@ -51,15 +55,20 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     public void setImageResource(int viewId, String url, Context context) {
         ImageView iv = getView(viewId);
+        RequestManager with = Glide.with(context);
         Glide.with(context)
+                .asBitmap()
                 .load(url)
                 .apply(new RequestOptions().centerCrop())
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
+//                .transition(DrawableTransitionOptions.withCrossFade())
+                .thumbnail(0.3f)
                 .into(iv);
 
     }
 
     public void setBackground(int viewId, int r) {
-        ViewGroup v=getView(viewId);
+        ViewGroup v = getView(viewId);
         v.setBackgroundColor(r);
     }
 

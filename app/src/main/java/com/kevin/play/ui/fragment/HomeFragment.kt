@@ -106,10 +106,21 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
         mPresenter!!.requestArticleList(0, Constants.REQUEST_REFRESH)
     }
 
+    fun refreshData() {
+        if (mPresenter == null) {
+            mPresenter = HomePresenter(this, RequestDataSource.getSingleInstance()!!)
+        }
+        homeAdapter = HomeArticleAdapter(activity!!, articleData)
+        adapter = BannerAdapter(activity!!.applicationContext, data)
+        mPresenter!!.requestDataBanner()
+        mPresenter!!.requestArticleList(0, Constants.REQUEST_REFRESH)
+        stopAutoPlay()
+    }
+
     override fun showDataBanner(data: List<HomeBannerData>) {
-        adapter!!.addData(data)
+        adapter?.addData(data)
         verifyState(data)
-        homeBanner!!.setCurrentItem(1, false)
+        homeBanner?.setCurrentItem(1, false)
         if (!isPlay) {
             startAutoPlay()
         }
@@ -117,8 +128,8 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
 
     override fun showArticleList(data: List<Content>, type: String) {
         when (type) {
-            Constants.REQUEST_REFRESH -> homeAdapter!!.updateData(data)
-            Constants.REQUEST_LOAD_MORE -> homeAdapter!!.addData(data)
+            Constants.REQUEST_REFRESH -> homeAdapter?.updateData(data)
+            Constants.REQUEST_LOAD_MORE -> homeAdapter?.addData(data)
         }
     }
 
@@ -167,7 +178,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
 
     override fun onPageSelected(p0: Int) {
         currentPosition = p0
-        printD("position=======$p0")
+//        printD("position=======$p0")
     }
 
     override fun showError(data: List<Any>?) {
@@ -214,7 +225,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
                 } else {
                     toast(getString(R.string.login_tip))
                 }
-                printW("position------$position")
+//                printW("position------$position")
             }
         }
     }

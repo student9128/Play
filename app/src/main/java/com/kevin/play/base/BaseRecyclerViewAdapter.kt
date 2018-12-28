@@ -126,10 +126,10 @@ abstract class BaseRecyclerViewAdapter<T>(var context: Context, var data: Mutabl
 
     override fun getItemViewType(position: Int): Int {
         var i = 0
-        LogUtils.d("BaseRecyclerView", "position=$position")
-        LogUtils.d("BaseRecyclerView", "getShowFoot=" + getShowFoot())
+//        LogUtils.d("BaseRecyclerView", "position=$position")
+//        LogUtils.d("BaseRecyclerView", "getShowFoot=" + getShowFoot())
         return if (position == itemCount - 1) {
-            LogUtils.i("Project", "i=" + (i++) + "-dataType-" + dataType)
+//            LogUtils.i("Project", "i=" + (i++) + "-dataType-" + dataType)
             when (dataType) {
                 4 -> TYPE_NO_DATA_SHOW
                 3 -> TYPE_NO_DATA

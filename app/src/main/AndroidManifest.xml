@@ -15,6 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.kevin.play.view.GModule"
+            android:value="GModule" />
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme">

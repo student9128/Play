@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
     android:paddingLeft="5sp"
-    android:paddingRight="10sp">
+    android:paddingTop="5dp"
+    android:paddingRight="16sp"
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/iv_pre"
         android:layout_width="50dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,2:3"
         app:layout_constraintRight_toRightOf="parent"
@@ -70,10 +71,12 @@
 
         <ImageView
             android:id="@+id/iv_favorite"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
             android:src="@drawable/ic_favorite" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

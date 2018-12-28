@@ -37,7 +37,7 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
         viewPager.adapter = adapter
         with(viewPager) {
             currentItem = 0
-            offscreenPageLimit = 4
+            offscreenPageLimit = 1
         }
         with(tabLayout) {
             setupWithViewPager(viewPager)
@@ -47,6 +47,8 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
             tabLayout.getTabAt(i)?.customView = adapter!!.getTabView(i)
         }
         setToolbarTitle(0)
+        homeFragment = HomeFragment()
+        projectFragment = ProjectFragment()
 
     }
 
@@ -59,9 +61,9 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
     private fun initFragmentList() {
         fragmentList?.clear()
         fragmentList?.let {
-            it.add(HomeFragment.newInstance("Home"))
+            it.add(homeFragment ?: HomeFragment())
             it.add(NavFragment.newInstance("Nav"))
-            it.add(ProjectFragment.newInstance("Project"))
+            it.add(projectFragment ?: ProjectFragment())
             it.add(PersonFragment.newInstance("Person"))
         }
 
@@ -165,13 +167,21 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (Activity.RESULT_OK == resultCode) {
-            homeFragment!!.loadData()
-            projectFragment!!.loadData()
         }
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         setIntent(intent)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        printI("onPause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        printI("onDestroy")
     }
 }

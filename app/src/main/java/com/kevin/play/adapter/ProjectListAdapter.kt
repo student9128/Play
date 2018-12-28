@@ -27,7 +27,7 @@ class ProjectListAdapter(context: Context, data: MutableList<ProjectList>) : Bas
             setText(R.id.tv_author, author)
             setText(R.id.tv_time, niceDate)
             setText(R.id.tv_des, desc)
-            setImageResource(R.id.iv_pre, envelopePic, context)
+//            setImageResource(R.id.iv_pre, envelopePic, context)
             if (collect) {
                 setImageResource(R.id.iv_favorite, R.drawable.ic_favorite_filled)
             } else {

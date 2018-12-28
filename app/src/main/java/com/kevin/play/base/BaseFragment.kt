@@ -1,5 +1,6 @@
 package com.kevin.play.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -85,11 +86,6 @@ open abstract class BaseFragment : AppBaseFragment() {
     open abstract fun loadData()
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        cDisposable.clear()
-    }
-
     /**
      * 校验页面状态
      */
@@ -103,9 +99,9 @@ open abstract class BaseFragment : AppBaseFragment() {
                 CommonPage.STATE_LOADED
             }
         }
-        commonPage!!.showPageView(mState)
+        commonPage?.showPageView(mState)
         if (mState == -1) {
-            commonPage!!.initErrorView(null, "暂网络连接")
+            commonPage?.initErrorView(null, "暂网络连接")
         }
 
 
