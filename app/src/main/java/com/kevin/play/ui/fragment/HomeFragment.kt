@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.kevin.play.R
 import com.kevin.play.adapter.BannerAdapter
+import com.kevin.play.adapter.BannerAdapterJava
 import com.kevin.play.adapter.HomeArticleAdapter
 import com.kevin.play.base.BaseFragment
 import com.kevin.play.bean.Content
@@ -29,14 +30,14 @@ import io.reactivex.disposables.Disposable
  * Blog:http://student9128.top/<br/>
  * Describe:<br/>
  */
-class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeListener, View.OnTouchListener, BannerAdapter.OnViewPagerClickListener, HomeArticleAdapter.OnLoadMoreListener, HomeArticleAdapter.OnChildItemClickListener {
+class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeListener, View.OnTouchListener, BannerAdapterJava.OnViewPagerClickListener, HomeArticleAdapter.OnLoadMoreListener, HomeArticleAdapter.OnChildItemClickListener {
 
     var homeBanner: ViewPager? = null
     var recyclerView: RecyclerView? = null
     private var currentPosition = 1
     private var d: MutableList<HomeBannerData> = ArrayList()
 
-    private var adapter: BannerAdapter? = null
+    private var adapter: BannerAdapterJava? = null
     private var data = ArrayList<HomeBannerData>()
     private var mPresenter: HomeContract.Presenter? = null
     private var isPlay = false
@@ -73,7 +74,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     override fun initView() {
         mPresenter = HomePresenter(this, RequestDataSource.getSingleInstance()!!)
         homeBanner = mView!!.findViewById<ViewPager>(R.id.homeBanner)
-        adapter = BannerAdapter(activity!!.applicationContext, data)
+        adapter = BannerAdapterJava(activity!!.applicationContext, data)
         homeBanner?.let {
             it.adapter = adapter
             it.setPageTransformer(true, PagerTransformerZoomOut())
@@ -111,7 +112,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
             mPresenter = HomePresenter(this, RequestDataSource.getSingleInstance()!!)
         }
         homeAdapter = HomeArticleAdapter(activity!!, articleData)
-        adapter = BannerAdapter(activity!!.applicationContext, data)
+        adapter = BannerAdapterJava(activity!!.applicationContext, data)
         mPresenter!!.requestDataBanner()
         mPresenter!!.requestArticleList(0, Constants.REQUEST_REFRESH)
         stopAutoPlay()

@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.kevin.play.view.GModule"
-            android:value="GModule" />
+            android:value="GlideModule" />
 
         <activity
             android:name=".ui.activity.SplashActivity"

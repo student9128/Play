@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.kevin.play.R
 import com.kevin.play.bean.HomeBannerData
 
@@ -51,15 +49,15 @@ class BannerAdapter(context: Context, data: MutableList<HomeBannerData>) : Pager
 //            else -> p -= 1
 //        }
         val bannerData = data[position]
-        with(bannerData) {
-            Glide.with(context)
-                .load(imagePath)
-                .apply(RequestOptions().centerCrop())
-                .into(ivBanner)
-        }
-        ivBanner.setOnClickListener {
-            listener!!.onViewPagerClick(position)
-        }
+//        with(bannerData) {
+//            GlideApp.with(context)
+//                .load(imagePath)
+//                .apply(RequestOptions().centerCrop())
+//                .into(ivBanner)
+//        }
+//        ivBanner.setOnClickListener {
+//            listener!!.onViewPagerClick(position)
+//        }
         container.addView(view)
         return view
     }
