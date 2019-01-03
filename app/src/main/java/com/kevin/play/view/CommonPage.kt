@@ -37,6 +37,7 @@ open abstract class CommonPage @JvmOverloads constructor(
     private var mErrorView: View? = null
     private var mSuccessView: View? = null
     private var mEmptyView: View? = null
+    private var mNetErrorView: View? = null
     private var mState: Int = 0
 
 
@@ -44,6 +45,10 @@ open abstract class CommonPage @JvmOverloads constructor(
         if (mSuccessView == null) {
             mSuccessView = initContentView()
             addPageView(mSuccessView!!)
+        }
+        if (mNetErrorView == null) {
+            mNetErrorView = initNetErrorView()
+            addPageView(mNetErrorView!!)
         }
         if (mLoadingView == null) {
             mLoadingView = initLoadingView()
@@ -61,6 +66,7 @@ open abstract class CommonPage @JvmOverloads constructor(
         mLoadingView!!.visibility = View.VISIBLE
         mErrorView!!.visibility = View.GONE
         mEmptyView!!.visibility = View.GONE
+        mNetErrorView!!.visibility = View.GONE
 
     }
 
@@ -83,6 +89,10 @@ open abstract class CommonPage @JvmOverloads constructor(
         return v
     }
 
+    open fun initNetErrorView(): View? {
+        return initErrorView(R.drawable.ic_place_holder_error, context.getString(R.string.page_network_error))
+    }
+
     open fun initEmptyView(): View? {
         return View.inflate(context, R.layout.layout_empty_page, null)
     }
@@ -95,8 +105,9 @@ open abstract class CommonPage @JvmOverloads constructor(
 
         mLoadingView!!.visibility = if (mState == STATE_UNLOADED || mState == STATE_LOADING) View.VISIBLE else View.GONE
         mSuccessView!!.visibility = if (mState == STATE_LOADED) View.VISIBLE else View.GONE
-        mErrorView!!.visibility = if (mState == STATE_ERROR || mState == STATE_NET_ERROR) View.VISIBLE else View.GONE
+        mErrorView!!.visibility = if (mState == STATE_ERROR) View.VISIBLE else View.GONE
         mEmptyView!!.visibility = if (mState == STATE_EMPTY) View.VISIBLE else View.GONE
+        mNetErrorView!!.visibility = if (mState == STATE_NET_ERROR) View.VISIBLE else View.GONE
 
     }
 

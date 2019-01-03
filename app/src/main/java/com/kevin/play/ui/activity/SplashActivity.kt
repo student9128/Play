@@ -2,6 +2,8 @@ package com.kevin.play.ui.activity
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.ConnectivityManager
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -14,8 +16,11 @@ import com.kevin.play.MainActivity
 import com.kevin.play.R
 import com.kevin.play.base.AppBaseActivity
 import com.kevin.play.bean.Splash
+import com.kevin.play.constant.Constants
 import com.kevin.play.http.AppRetrofit.Companion.appRetrofit
 import com.kevin.play.http.HttpCallback
+import com.kevin.play.manager.PermissionManager
+import com.kevin.play.util.NetUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -24,14 +29,18 @@ import kotlinx.android.synthetic.main.activity_splash.*
  * Describe:<br/>
  */
 class SplashActivity : AppBaseActivity() {
+    private var cm: ConnectivityManager? = null
+    var callback: ConnectivityManager.NetworkCallback = NetUtils.callback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
+        cm = NetUtils.initCM(this)
+        cm!!.registerNetworkCallback(NetworkRequest.Builder().build(), callback)
         var ivSplash = findViewById<ImageView>(R.id.iv_splash)
-        sfSplash.visibility= View.GONE
+        sfSplash.visibility = View.GONE
         if (!this.isTaskRoot) {
             var action = intent.action
             action?.let {
@@ -42,20 +51,16 @@ class SplashActivity : AppBaseActivity() {
             }
 
         }
-//        sfSplash.startShimmer()
-//        Handler().postDelayed({
-//            val animation = AnimationUtils.loadAnimation(this, R.anim.animation_fadeout)
-//            animation.fillAfter = true
-//            window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
-//            startActivity(Intent(this, MainActivity::class.java))
-////            if (sfSplash.isShimmerStarted) {
-////                sfSplash.stopShimmer()
-////            }
-//            finish()
-//
-//        }, 3000)
-//        val appRetrofit = AppRetrofit("https://cn.bing.com/")
+
+        if (NetUtils.isNetworkAvailable()) {
+            requestWallpaper(ivSplash)
+        } else {
+            showTime()
+        }
+
+    }
+
+    private fun requestWallpaper(ivSplash: ImageView) {
         val httpService = appRetrofit.getHttpService()
         val observable = httpService.getBingWallpaper()
         var x = object : HttpCallback<Splash>() {
@@ -66,7 +71,7 @@ class SplashActivity : AppBaseActivity() {
                         .load("https://cn.bing.com" + images[0].url)
                         .apply(RequestOptions().centerCrop())
                         .into(ivSplash)
-                    sfSplash.visibility= View.VISIBLE
+                    sfSplash.visibility = View.VISIBLE
                     showTime()
                 }
             }
@@ -78,7 +83,6 @@ class SplashActivity : AppBaseActivity() {
 
         }
         x.request(observable)
-
     }
 
     private fun showTime() {
@@ -91,5 +95,10 @@ class SplashActivity : AppBaseActivity() {
             finish()
 
         }, 3000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cm!!.unregisterNetworkCallback(callback)
     }
 }

@@ -227,6 +227,13 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
                 }
 //                printW("position------$position")
             }
+            R.id.tv_title -> {
+                val link = articleData[position].link
+                var intent = Intent(mActivity, WebActivity::class.java)
+                intent.putExtra("url", link)
+                startActivity(intent)
+
+            }
         }
     }
 

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Play</string>
-    <string name="home">Home</string>
-    <string name="nav">Nav</string>
-    <string name="project">Project</string>
-    <string name="person">Person</string>
+    <string name="home">主页</string>
+    <string name="nav">导航</string>
+    <string name="project">项目</string>
+    <string name="person">个人</string>
 
     <string name="http_error_unauthorized">Unauthorized</string>
     <string name="http_error_forbidden">Request Forbidden</string>
@@ -18,15 +18,28 @@
     <string name="exception_interrupted_io">Interrupted IO Exception</string>
     <string name="exception_parse">Parse Error</string>
 
+    <string name="permission_common_rationale">请授权相关权限</string>
+    <string name="permission_EXTERNAL_STORAGE_rationale">请授权读写权限</string>
 
-    <string name="user_name_placeholder">Please text your username</string>
-    <string name="password_placeholder">Please text your password</string>
-    <string name="rePassword_placeholder">Please text your password again</string>
-    <string name="auto_login">Auto Login</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="send">Send</string>
-    <string name="back">Back</string>
+    <string name="page_network_error">请先连接网络,\n点击重新加载</string>
+
+
+    <string name="user_name_placeholder">请输入账号</string>
+    <string name="password_placeholder">请输入密码</string>
+    <string name="rePassword_placeholder">请确认密码</string>
+    <string name="auto_login">自动登录</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="send">发送</string>
+    <string name="back">返回</string>
     <string name="splash">壁纸来自必应API,\n内容来自WanAndroid API</string>
-    <string name="login_tip">Please login first</string>
+    <string name="login_tip">请先登录</string>
+
+    <string name="action_open_in_browser">在浏览器中打开</string>
+    <string name="action_copy_url">复制链接</string>
+    <string name="action_share">分享</string>
+
+    <string name="dialog_btn_ok">好的</string>
+    <string name="dialog_btn_cancel">取消</string>
+    <string name="dialog_btn_yes">是的</string>
 </resources>

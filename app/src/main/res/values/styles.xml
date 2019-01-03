@@ -7,6 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/white_4</item>
+
+        <item name="buttonBarPositiveButtonStyle">@style/positiveBtnStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/negativeBtnStyle</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -24,8 +27,12 @@
         <item name="android:windowBackground">@color/white_4</item>
     </style>
 
-    <style name="ToolbarStyle" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/white</item>
+    <!--<style name="ToolbarStyle" parent="android:Widget.TextView">-->
+        <!--<item name="android:textColor">@color/white</item>-->
+    <!--</style>-->
+    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
     <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
@@ -36,6 +43,16 @@
         <item name="android:windowCloseOnTouchOutside">false</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+    </style>
+
+    <!--确定按钮样式-->
+    <style name="positiveBtnStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <!--取消按钮样式-->
+    <style name="negativeBtnStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="loginEditStyle">

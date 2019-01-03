@@ -36,6 +36,8 @@ class ProjectListAdapter(context: Context, data: MutableList<ProjectList>) : Bas
         }
 //        viewHolder.getView<ImageView>(R.id.iv_favorite)
         viewHolder.onChildClick(R.id.iv_favorite, position)
+        viewHolder.onChildClick(R.id.tv_title, position)
+        viewHolder.onChildClick(R.id.tv_des, position)
         viewHolder.setOnChildClickListener(this)
     }
 

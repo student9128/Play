@@ -72,6 +72,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         v.setBackgroundColor(r);
     }
 
+    /**
+     * 子控件点击事件
+     * @param viewId
+     * @param position
+     */
     public void onChildClick(final int viewId, final int position) {
         getView(viewId).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +88,10 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    /**
+     * 条目点击事件
+     * @param position
+     */
     public void onSubItemClick(final int position) {
         getRootView().setOnClickListener(new View.OnClickListener() {
             @Override

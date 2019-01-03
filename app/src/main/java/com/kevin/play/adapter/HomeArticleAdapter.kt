@@ -87,6 +87,9 @@ class HomeArticleAdapter(var context: Context, var data: MutableList<Content>) :
                     childClickListener!!.onChildItemClick(R.id.iv_favorite, position)
                 }
             }
+            h.tvTitle.setOnClickListener {    if (childClickListener != null) {
+                childClickListener!!.onChildItemClick(R.id.tv_title, position)
+            } }
         }
         if (getItemViewType(position) == TYPE_FOOTER) {
             if (loadMoreListener != null) {

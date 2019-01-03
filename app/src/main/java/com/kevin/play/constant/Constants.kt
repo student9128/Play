@@ -15,10 +15,20 @@ object Constants {
     const val KEY_REGISTER = "user/register"
     const val KEY_SET_COOKIE = "set-cookie"
 
-    const val KEY_COOKIE_STORE="cookie_persistence"
+    const val KEY_COOKIE_STORE = "cookie_persistence"
 
     const val KEY_USER_NAME = "userName"
     const val KEY_LOGIN_STATE = "loginState"
+
+    const val DIALOG_TITLE = "COMMON_DIALOG_TITLE"
+    const val DIALOG_MESSAGE = "COMMON_DIALOG_MESSAGE"
+    const val DIALOG_LEFT_BUTTON = "COMMON_DIALOG_LEFT_BUTTON"
+    const val DIALOG_RIGHT_BUTTON = "COMMON_DIALOG_RIGHT_BUTTON"
+
+    const val ACCESS_NETWORK_STATE = 100
+    const val WRITE_EXTERNAL_STORAGE = 101
+    const val READ_EXTERNAL_STORAGE = 102
+
 
 
 }

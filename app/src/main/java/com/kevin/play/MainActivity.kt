@@ -2,8 +2,14 @@ package com.kevin.play
 
 import android.animation.ArgbEvaluator
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.health.PackageHealthStats
+import android.provider.Settings
 import android.support.design.widget.TabLayout
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
@@ -11,11 +17,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.kevin.play.adapter.TabFragmentAdapter
 import com.kevin.play.base.BaseActivity
+import com.kevin.play.base.BaseDialog
+import com.kevin.play.constant.Constants
+import com.kevin.play.manager.PermissionManager
 import com.kevin.play.ui.fragment.HomeFragment
 import com.kevin.play.ui.fragment.NavFragment
 import com.kevin.play.ui.fragment.PersonFragment
 import com.kevin.play.ui.fragment.ProjectFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.jar.Manifest
 
 class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -50,7 +60,47 @@ class MainActivity : BaseActivity(), TabLayout.OnTabSelectedListener, ViewPager.
         homeFragment = HomeFragment()
         projectFragment = ProjectFragment()
 
+        checkPermission()
     }
+
+    private fun checkPermission() {
+        if (!PermissionManager.hasPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        ) {
+            PermissionManager.requestPermission(this, Constants.WRITE_EXTERNAL_STORAGE, R.string.permission_EXTERNAL_STORAGE_rationale, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == Constants.WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    PermissionManager.requestPermission(this, Constants.WRITE_EXTERNAL_STORAGE, R.string.permission_EXTERNAL_STORAGE_rationale, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                } else {
+                    printD("执行了")
+                    showDialog(-1, R.string.permission_EXTERNAL_STORAGE_rationale, object : BaseDialog.DialogButtonClickListener {
+                        override fun onLeftBtnClick(dialog: DialogInterface) {
+                        }
+
+                        override fun onRightBtnClick(dialog: DialogInterface) {
+                            startAppSettings()
+                        }
+
+                    })
+                }
+            }
+        }
+
+    }
+
+//    private fun startAppSettings() {
+//        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        intent.data = Uri.parse("package:$packageName")
+//        startActivity(intent)
+//    }
 
     override fun initListener() {
         tabLayout.addOnTabSelectedListener(this)

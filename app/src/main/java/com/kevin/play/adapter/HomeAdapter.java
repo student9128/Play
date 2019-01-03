@@ -57,6 +57,7 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<Content> implements Bas
         }
         viewHolder.getView(R.id.iv_favorite).setTag(position);
         viewHolder.onChildClick(R.id.iv_favorite, position);
+        viewHolder.onChildClick(R.id.tv_title, position);
         viewHolder.setOnChildClickListener(this);
 
     }
@@ -68,8 +69,8 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<Content> implements Bas
 
     @Override
     public void onChildClick(int viewId, int position) {
-        if (childClickListener!=null){
-            childClickListener.onChildItemClick(viewId,position);
+        if (childClickListener != null) {
+            childClickListener.onChildItemClick(viewId, position);
         }
 
     }

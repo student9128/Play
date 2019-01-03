@@ -1,5 +1,6 @@
 package com.kevin.play.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.kevin.play.constant.Constants
 import com.kevin.play.contract.ProjectContract
 import com.kevin.play.data.RequestDataSource
 import com.kevin.play.presenter.ProjectPresenter
+import com.kevin.play.ui.activity.WebActivity
 import com.kevin.play.view.DividerItemDecoration
 import io.reactivex.disposables.Disposable
 
@@ -148,6 +150,18 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
                 } else {
                     toast(getString(R.string.login_tip))
                 }
+            }
+            R.id.tv_title -> {
+                val link = listData[position].link
+                var intent = Intent(mActivity, WebActivity::class.java)
+                intent.putExtra("url", link)
+                startActivity(intent)
+            }
+            R.id.tv_des -> {
+                val link = listData[position].link
+                var intent = Intent(mActivity, WebActivity::class.java)
+                intent.putExtra("url", link)
+                startActivity(intent)
             }
         }
     }
