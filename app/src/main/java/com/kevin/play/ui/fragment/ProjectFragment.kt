@@ -138,6 +138,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, BaseRecyclerViewAd
     override fun onChildItemClick(viewId: Int, position: Int) {
         when (viewId) {
             R.id.iv_favorite -> {
+                isLogin = getBooleanSP(Constants.KEY_LOGIN_STATE)
                 if (isLogin) {
                     val projectList = listData[position]
                     val id = projectList.id

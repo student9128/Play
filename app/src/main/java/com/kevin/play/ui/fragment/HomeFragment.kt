@@ -214,6 +214,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     override fun onChildItemClick(viewId: Int, position: Int) {
         when (viewId) {
             R.id.iv_favorite -> {
+                isLogin = getBooleanSP(Constants.KEY_LOGIN_STATE)
                 if (isLogin) {
                     val content = articleData[position]
                     val id = content.id
