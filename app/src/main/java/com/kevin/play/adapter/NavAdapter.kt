@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.kevin.play.R
 import com.kevin.play.bean.NavData
 import com.kevin.play.util.DisplayUtils
+import com.kevin.play.util.LogUtils
 
 /**
  * Created by Kevin on 2018/12/20<br/>
@@ -78,20 +79,25 @@ class NavAdapter(var context: Context, var data: MutableList<NavData>) : BaseExp
             childViewHolder = view!!.tag as ChildViewHolder
         }
         var count = data[groupPosition].articles.size
-        for (i in 0..(count - 1)) {
-            var cText = TextView(context)
-            var lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            cText.layoutParams = lp
-            var paddingVertical = DisplayUtils.dip2px(context, 5F)
-            var paddingHorizontal = DisplayUtils.dip2px(context, 10F)
-            cText.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
-            cText.gravity = Gravity.CENTER
-            cText.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-            cText.text = data[groupPosition].articles[i].title
-            childViewHolder!!.flexBox!!.addView(cText)
-            cText.setOnClickListener {
-                if (listener != null) {
-                    listener!!.onChildItemClick(groupPosition, i)
+        LogUtils.d("NavAdapter", "count=$count")
+        val childCount = childViewHolder!!.flexBox!!.childCount
+        if (childCount != count) {
+            childViewHolder!!.flexBox!!.removeAllViews()
+            for (i in 0..(count - 1)) {
+                var cText = TextView(context)
+                var lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                cText.layoutParams = lp
+                var paddingVertical = DisplayUtils.dip2px(context, 5F)
+                var paddingHorizontal = DisplayUtils.dip2px(context, 10F)
+                cText.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
+                cText.gravity = Gravity.CENTER
+                cText.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+                cText.text = data[groupPosition].articles[i].title
+                childViewHolder!!.flexBox!!.addView(cText)
+                cText.setOnClickListener {
+                    if (listener != null) {
+                        listener!!.onChildItemClick(groupPosition, i)
+                    }
                 }
             }
         }
