@@ -5,6 +5,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent">
     <android.support.v4.view.ViewPager
             android:id="@+id/homeBanner"
+        app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="H,16:8"
             android:layout_width="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"

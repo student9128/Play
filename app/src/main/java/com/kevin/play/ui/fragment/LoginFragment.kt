@@ -70,10 +70,10 @@ class LoginFragment : BaseFragment(), PersonContract.View {
             val username = etUsername!!.text.toString().trim()
             val password = etPassword!!.text.toString().trim()
             when {
-                username.isNullOrEmpty() -> {
+                username!!.isNullOrEmpty() -> {
                     toast("账号不能为空")
                 }
-                password.isNullOrEmpty() -> {
+                password!!.isNullOrEmpty() -> {
                     toast("密码不能为空")
                 }
                 else -> {

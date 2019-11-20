@@ -58,6 +58,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
     }
 
     companion object {
+        @JvmStatic
         fun newInstance(args: String): HomeFragment {
             var fragment = HomeFragment()
             var bundle = Bundle()
@@ -65,6 +66,8 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
             fragment.arguments = bundle
             return fragment
         }
+        @JvmField
+        var handler = Handler()
     }
 
     override fun setLayoutResId(): Int {
@@ -134,7 +137,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, ViewPager.OnPageChangeLi
         }
     }
 
-    var handler = Handler()
+
     var currentItem = 0
     private var runnable = object : Runnable {
         override fun run() {

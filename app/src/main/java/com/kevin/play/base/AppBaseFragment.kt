@@ -16,7 +16,7 @@ import retrofit2.HttpException
  * Describe:<br/>
  */
 open class AppBaseFragment : Fragment() {
-    open var TAG = javaClass.simpleName
+    open var TAG: String = javaClass.simpleName
     open var mActivity: FragmentActivity? = null
 
     override fun onAttach(context: Context?) {

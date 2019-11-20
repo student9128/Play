@@ -288,7 +288,7 @@ class ProgressBarView @JvmOverloads constructor(context: Context, attrs: Attribu
         mPaint.color = Color.WHITE
         var textLeft = mLeft.toFloat()
         if (mLeft + bound.width() / 2 > progressBarRight * 3 / 4) {
-            textLeft = textLeft
+//            textLeft = textLeft
         } else {
             textLeft = progressBarRight * 3 / 4 - (bound.left + bound.right) / 2
             if (textLeft + bound.width() / 2 >= (mLeft + progressBarTotalWidth) * 3 / 4) {
